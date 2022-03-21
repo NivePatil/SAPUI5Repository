@@ -1,0 +1,77 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:variant="sap.ui.comp.variants">
+	<Dialog title = "{i18n>SelectionScreenPopUpTitle}" id="SelectionScreenFrag"
+	class="sapUiSizeCompact" contentWidth="600px" contentHeight="900px" >
+	<variant:VariantManagement variantItems="{VariantsModel>/}" select="onSelectVariantInSelScrn" save="onSaveVariantInSelScrn" manage="onManageVariantInSelScrn" id="Variants">
+		<variant:variantItems>
+			<variant:VariantItem text="{VariantsModel>Name}" key="{VariantsModel>Key}"/>
+		</variant:variantItems>
+	</variant:VariantManagement>
+		
+	<l:Grid
+		class="sapUiResponsiveMargin sapUiSmallMarginEnd" 
+		hSpacing="2"
+		defaultSpan="L6 M6 S10">
+		<l:content>
+			<Label text="{i18n>FreightForwarder}" required="true" textDirection="RTL"/>
+			<MultiInput id="id_FreightForwarder" value="{selectionScreenModel>freightFwder}" showValueHelp="true"
+				valueHelpOnly="true" valueHelpRequest="handleFreightForwarderF4Open" tokenUpdate="onSelScrnFrghtFrwdTokenChange" />
+
+			<Label text="{i18n>VesselNo}"/>
+			<MultiInput id="id_VesselNo" showValueHelp="true"
+				valueHelpOnly="true" valueHelpRequest="handleVesselF4Open" tokenUpdate="onSelectionScreenTokenChange">
+			</MultiInput>
+            
+			<Label text="{i18n>ShipmentNo}"/>
+            <MultiInput id="id_ShipmentNo" showValueHelp="true"
+				valueHelpOnly="true" valueHelpRequest="handleShipNoF4Open" tokenUpdate="onSelectionScreenTokenChange">
+            </MultiInput>
+
+			<Label text="{i18n>BOL_AWB}" textDirection="RTL"/>
+			<Input id="id_BolID" value="{selectionScreenModel>BolNo}" change="onSelectionScreenInputChange" />
+			
+			<Label text="{i18n>EreqId}" textDirection="RTL"/>
+			<Input id="id_EreqID" value="{selectionScreenModel>ereqId}" change="onSelectionScreenInputChange" />
+
+			<Label text="{i18n>FlightOrVoyageNumber}" textDirection="RTL"/>
+			<Input id="id_FlightVoyageNo" value="{selectionScreenModel>FlightOrVoyageNumber}" change="onSelectionScreenInputChange" />
+			
+			<Label text="{i18n>ShipFromCountry}" />
+			<MultiInput id="id_ShipFromCountry" value="{selectionScreenModel>shipFromCountry}" showValueHelp="true" 
+				valueHelpOnly="true" valueHelpRequest="handleShipFromCountryF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+			
+			<Label text="{i18n>ShipToCountry}" /> 
+			<MultiInput id="id_ShipToCountry" value="{selectionScreenModel>shipToCountry}" showValueHelp="true"   
+				valueHelpOnly="true" valueHelpRequest="handleShipToCountryF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+
+			<Label text="{i18n>VesselStatus}" required="true" textDirection="RTL" />
+			<MultiInput id="id_VesselStatus" value="{selectionScreenModel>VesselStatus}"  showValueHelp="true"  
+				 valueHelpOnly="true" valueHelpRequest="handleVesselStatusF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+			
+			<Label text="{i18n>SHStatus}" textDirection="RTL" />
+			<MultiInput id="id_SHStatus" value="{selectionScreenModel>shStatus}"  showValueHelp="true"  
+				 valueHelpOnly="true" valueHelpRequest="handleSHStatusF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+			
+			<Label text="{i18n>VesselCreationDate}" textDirection="RTL" />
+			<DateRangeSelection  id="id_VesselCreationDate" 
+				value="{path:'', type:'sap.ui.model.type.DateInterval', formatOptions: {
+					UTC: true,
+					pattern: 'dd-MMM-yyyy'
+					}}"
+				change="handleSelScnCrtVslDateRangeChange"
+			/>
+			</l:content>
+	</l:Grid>
+	
+	<Text text="{i18n>Header.SelectnSupportMsg}" class="sapUiSmallMarginBeginEnd" />
+	 
+	<buttons>
+		<Button id="BtnSelectionScreenSave" text="{i18n>Save}" type="Accept"  press="handleSelectionScreenSave" />
+		<Button id="BtnSelectionScreenClear" text="{i18n>Clear}" type="Emphasized"  press="handleSelectionScreenClear" />
+		<Button id="BtnSelectionScreenCancel" text="{i18n>Cancel}" type="Reject"  press="handleSelectionScreenClose"   />
+	</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Dialog  contentWidth="500px"
+		contentHeight="150px" title="{i18n>IEPreClearenceInstruction}"
+		class="sapUiSizeCompact">
+		<subHeader>
+
+		</subHeader>
+		<content>
+
+				<TextArea id="idPreClrInst" enabled="false"
+					value="{ShipmentIETextModel>/IePreclrInstructions}"
+					growingMaxLines="7" width="100%" rows="8"></TextArea>
+		
+
+		</content>
+
+		<endButton>
+			<Button text="{i18n>IEPreClrCancelButton}"
+				press="handleIEPreClrF4Cancel" type="Reject" />
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

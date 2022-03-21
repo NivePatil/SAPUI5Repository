@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>DwnldClBtnOptionsDialog.TitleTxt}" contentWidth="auto" contentHeight="auto">
+		<content>
+		
+				<VBox class="sapUiSmallMargin">
+				<RadioButtonGroup id="id_Grp1">
+					<RadioButton id="id_Pak" text="ZPAK-Packing List" selected="true" />
+					<RadioButton id="id_Csd" text="ZCSD-Consolidated Shipping Doc" />
+					<RadioButton id="Id_Com" text="ZCOM-Commercial Invoice" />
+					</RadioButtonGroup>
+				</VBox>
+			
+			
+		</content>
+		<beginButton>
+			<Button text="{i18n>DwnldClBtnOptionsDialog.Submit}" press="handleDwnldClBtnOutputOptionsDialogClose" type="Accept"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>DwnldClBtnOptionsDialog.Cancel}" press="handleDwnldClBtnOutputOptionsDialogCancel" type="Reject"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

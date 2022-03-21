@@ -1,0 +1,5 @@
+<!-- Copyright (C) 2009-2016 SAP SE or an SAP affiliate company. All rights reserved. -->
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.slb.cpf.online.nonpo.zcpfnpotmplte.controller.App" 
+			displayBlock="true" height="100%">
+	<App id="fioriContent" />
+</mvc:View>

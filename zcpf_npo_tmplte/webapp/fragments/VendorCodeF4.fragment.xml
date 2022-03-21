@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>FragSelectVendorCode}" class="sapUiPopupWithPadding"
+					search="handleValueHelpSearch" confirm="handleValueHelpClose" cancel="handleValueHelpClose"
+					items="{path: 'vendorCodeF4Model>/',
+								sorter: {
+									path: 'Title',
+									descending: false
+									}}">
+		<StandardListItem title="{vendorCodeF4Model>Title}" description="{vendorCodeF4Model>Desc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

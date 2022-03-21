@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+xmlns="sap.m"
+xmlns:core="sap.ui.core">
+<Dialog contentWidth="700px" contentHeight="250px" title="IE Pre Clearence Instruction" class="sapUiSizeCompact">
+<subHeader>
+
+</subHeader>
+<content>
+
+<!-- <List id="Id_IEPreClrF4" items="" >
+<StandardListItem title=""
+description=""> 
+</StandardListItem>
+</List> -->
+</content>
+<endButton>
+<Button text="{i18n>IEPreClrCancelButton}" press="handleIEPreClrF4Cancel" type="Reject"/>
+</endButton>
+</Dialog>
+</core:FragmentDefinition>

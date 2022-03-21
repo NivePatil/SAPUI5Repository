@@ -1,0 +1,36 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<TableSelectDialog contentWidth="30%" contentHeight="70%" 
+		class="sapUiPopupWithPadding"
+		items="{path: 'IEVHModel>/',
+					sorter: {
+						path: 'Title',
+						descending: false
+						}}"
+		search="handleValueHelpSearch"
+		confirm="handleValueHelpClose"
+		cancel="handleValueHelpClose"
+		multiSelect="true"
+		>
+		<ColumnListItem selected="{IEVHModel>Selected}">
+			<cells>
+				<ObjectIdentifier
+					title="{IEVHModel>Title}" 
+					text="{IEVHModel>Desc}"/>
+					
+				</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="12em">
+				<header>
+					<Text text="All" />
+				</header>
+			</Column>
+		
+		</columns>
+		
+		
+		 
+	</TableSelectDialog>
+</core:FragmentDefinition>

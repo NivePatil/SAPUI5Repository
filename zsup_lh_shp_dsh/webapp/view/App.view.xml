@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="com.slb.sup.lh.shipment.monitor.zsuplhshpdsh.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    height="100%">
+	<App id="fioriContent" >
+		
+	</App>
+</mvc:View>

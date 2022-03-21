@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+<TableSelectDialog noDataText="{i18n>noDataValueHelp}" contentWidth="30%" contentHeight="70%"
+		title="{valueHelpModel>/title}"
+        multiSelect="{valueHelpModel>/bMultiSelect}"
+		growingThreshold="500"
+		items="{
+			path : 'valueHelpModel>/f4Data',
+			sorter : {
+				path : 'Title',
+				descending : false
+			}
+		}">
+		<ColumnListItem selected="{=${valueHelpModel>/bMultiSelect}?${valueHelpModel>Selected}:false}">
+			<cells>
+				<ObjectIdentifier title="{valueHelpModel>Title}"
+						text="{valueHelpModel>Desc}" />
+				</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="12em">
+				<header>
+					<Text text="{=${valueHelpModel>/bMultiSelect}?${valueHelpModel>/count}>0?'All('+${valueHelpModel>/count}+')':'All':${valueHelpModel>/count}>0?'Items('+${valueHelpModel>/count}+')':'Items'}" />
+				</header>
+			</Column>
+		
+		</columns>
+	</TableSelectDialog>
+	</core:FragmentDefinition>

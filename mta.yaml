@@ -1,0 +1,120 @@
+_schema-version: "3.2"
+ID: zshiptracker
+version: 0.0.1
+modules:
+- name: zshiptracker-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: zshiptracker-destination-service
+    parameters:
+      content-target: true
+  - name: zshiptracker_html_repo_host
+    parameters:
+      service-key:
+        name: zshiptracker_html_repo_host-key
+  - name: uaa_zshiptracker
+    parameters:
+      service-key:
+        name: uaa_zshiptracker-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: supply_zshiptracker_html_repo_host
+          ServiceInstanceName: zshiptracker-html5-app-host-service
+          ServiceKeyName: zshiptracker_html_repo_host-key
+          sap.cloud.service: supply
+        - Authentication: OAuth2UserTokenExchange
+          Name: supply_uaa_zshiptracker
+          ServiceInstanceName: zshiptracker-xsuaa-service
+          ServiceKeyName: uaa_zshiptracker-key
+          sap.cloud.service: supply
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: zshiptracker-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: zshiptracker_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comslbcpfonlinenonpozcpfnpotmplte.zip
+      name: comslbcpfonlinenonpozcpfnpotmplte
+      target-path: resources/
+    - artifacts:
+      - comslbsupvesseltrackerzsupvesltrckr.zip
+      name: comslbsupvesseltrackerzsupvesltrckr
+      target-path: resources/
+    - artifacts:
+      - comslbsuplhshipmentmonitorzsuplhshpdsh.zip
+      name: comslbsuplhshipmentmonitorzsuplhshpdsh
+      target-path: resources/
+- name: comslbcpfonlinenonpozcpfnpotmplte
+  type: html5
+  path: zcpf_npo_tmplte
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comslbsupvesseltrackerzsupvesltrckr
+  type: html5
+  path: zsup_vesl_trckr
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comslbsuplhshipmentmonitorzsuplhshpdsh
+  type: html5
+  path: zsup_lh_shp_dsh
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: zshiptracker-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: zshiptracker-destination-service
+    service-plan: lite
+- name: zshiptracker_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: zshiptracker-html5-app-host-service
+    service-plan: app-host
+- name: uaa_zshiptracker
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: zshiptracker-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo

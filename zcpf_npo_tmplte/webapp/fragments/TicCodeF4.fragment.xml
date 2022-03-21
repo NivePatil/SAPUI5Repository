@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>FragSelectTicCode}" class="sapUiPopupWithPadding"
+					search="handleValueHelpSearch" confirm="handleValueHelpClose" cancel="handleValueHelpClose"
+					items="{path: 'ticCodeF4Model>/',
+								sorter: {
+									path: 'Title',
+									descending: false
+									}}">
+		<StandardListItem title="{ticCodeF4Model>Title}" description="{ticCodeF4Model>Desc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

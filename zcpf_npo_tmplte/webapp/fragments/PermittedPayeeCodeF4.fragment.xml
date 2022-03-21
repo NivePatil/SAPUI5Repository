@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>FragSelectPermittedPayeeCode}" class="sapUiPopupWithPadding"
+					search="handleValueHelpSearch" confirm="handleValueHelpClose" cancel="handleValueHelpClose"
+					items="{path: 'permittedPayeeCodeF4Model>/',
+								sorter: {
+									path: 'Title',
+									descending: false
+									}}">
+		<StandardListItem title="{permittedPayeeCodeF4Model>Title}" description="{permittedPayeeCodeF4Model>Desc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

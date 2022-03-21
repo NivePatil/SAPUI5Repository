@@ -1,0 +1,156 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "com.slb.sup.lh.shipment.monitor.zsuplhshpdsh",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{NEW_APP_TITLE}}",
+        "description": "{{NEW_APP_DESCRIPTION}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZSUP_GOLD_LHS_DASHBOARD_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "frghtForwrdrVslTrckrService": {
+                "uri": "/sap/opu/odata/SAP/ZSUP_VESSEL_TRACKER_DASHBRD_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "com-slb-sup-lh-shipment-monitor-zsuplhshpdsh-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "ZLHShipment",
+                    "action": "monitor",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": ""
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.97.2",
+            "libs": {
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.slb.sup.lh.shipment.monitor.zsuplhshpdsh.i18n.i18n"
+                }
+            },
+            "VariantsModel": {
+				"type": "sap.ui.model.json.JSONModel"
+			},
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            },
+            "frghtForwarderModel": {
+                "dataSource": "frghtForwrdrVslTrckrService",
+                "settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					}
+				}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.slb.sup.lh.shipment.monitor.zsuplhshpdsh.view",
+                "controlAggregation": "pages",
+                "controlId": "fioriContent",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                { 	
+                "pattern": "", 	
+                "name": "MonitorShipments",
+                "target" : 	"MonitorShipments"
+                },
+                {
+                "pattern": "{ShipmentId},{ShipmentTypeId},{OverallStatus}",
+                "name": "ShipItems",
+                "target":"ShipItems"
+                }
+            ],
+            "targets": {
+                "MonitorShipments": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "MonitorShipments",
+                    "viewName": "MonitorShipments"
+                },
+                "ShipItems": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ShipmentContent",
+                    "viewName": "ShipmentContent"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.slb.sup.lh.shipment.monitor.zsuplhshpdsh.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "supply"
+    }
+}

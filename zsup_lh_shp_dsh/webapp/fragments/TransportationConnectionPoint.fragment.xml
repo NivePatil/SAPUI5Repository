@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+       xmlns="sap.m"
+       xmlns:l="sap.ui.layout"
+       xmlns:core="sap.ui.core">
+       <Dialog title = "{i18n>TitleTCP}" class="sapUiSizeCompact" contentWidth="800px" >
+       <l:Grid
+             class="sapUiResponsiveMargin sapUiSmallMarginEnd" 
+             hSpacing="2"
+             defaultSpan="L6 M12 S12">
+             <l:content>
+             <Label text="{i18n>TCP.DeparturePoint}" required="true" textDirection="RTL" />
+             <Label text="{i18n>TCP.DestinationPoint}" required="true" textDirection="RTL" />
+             
+             <Input id ="inp_Departure" showValueHelp="true" valueHelpOnly="true"
+             valueHelpRequest="handleDepartureF4Open"/>
+             <Input id ="inp_Destination" showValueHelp="true" valueHelpOnly="true"
+             valueHelpRequest="handleDestinationF4Open"/>
+
+             </l:content>
+             </l:Grid>
+<buttons>
+
+       <Button id="BtnTCPScreenSave" text="{i18n>TCPSave}" type="Accept"  press="handleTCPScreenSave" />
+       <Button id="BtnTCPScreenCancel" text="{i18n>Cancel}" type="Reject"  press="handleTCPScreenClose"   />
+       </buttons>          
+             
+             </Dialog>
+             </core:FragmentDefinition>

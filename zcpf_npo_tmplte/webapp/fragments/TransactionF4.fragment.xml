@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>FragSelectTransType}" class="sapUiPopupWithPadding"
+					search="handleValueHelpSearch" confirm="handleValueHelpClose" cancel="handleValueHelpClose"
+					items="{path: 'transactionF4Model>/',
+								sorter: {
+									path: 'Title',
+									descending: false
+									}}">
+		<StandardListItem title="{transactionF4Model>Title}" description="{transactionF4Model>Desc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

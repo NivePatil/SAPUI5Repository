@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog contentWidth="400px" contentHeight="50px" title="{i18n>SearchPopUpName}">
+		<subHeader>
+			<Toolbar>
+				<SearchField id = "IdSearchField" search ="onPressSrchPopUpSubmit" placeholder="{i18n>GINId}">
+				</SearchField>
+			</Toolbar>
+		</subHeader>
+		<!-- Submit Action -->
+		<beginButton>
+			<Button text="{i18n>Submit}" press="onPressSrchPopUpSubmit"/>
+		</beginButton>
+		<!-- Popup close -->
+		<endButton>
+			<Button text="{i18n>Cancel}" press="onPressSrchPopUpCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

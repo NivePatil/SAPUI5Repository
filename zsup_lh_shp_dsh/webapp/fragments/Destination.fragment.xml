@@ -1,0 +1,44 @@
+<!-- Begin of defect Id #24530 created a new Destination fragment-->
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:table="sap.ui.table" xmlns:core="sap.ui.core">
+	<Dialog title="Destination" class="sapUiSizeCompact"
+		contentWidth="30%" contentHeight="80%">
+		<VBox class="sapUiSmallMargin">
+			<RadioButtonGroup columns="2" width="100%">
+				<buttons>
+					<RadioButton id="id_DestinationDesc"
+						text="{i18n>DestinationF4.DestinationDesc}" />
+					<RadioButton id="id_DestinationCode"	
+						text="{i18n>DestinationF4.DestinationCode}" />
+				</buttons>
+			</RadioButtonGroup>
+		</VBox>
+		<subHeader>
+			<Toolbar>
+				<SearchField id="id_SrchFieldDestination"
+					search="_handleDestinationF4Search"
+					placeholder="{i18n>DestinationF4.SearchFieldPlacholder}" />
+			</Toolbar>
+		</subHeader>
+		
+		<!--defect #24530 select = "handleValueHelpDestinationClose" added -->
+		<List id="id_DestinationList" class="sapUiSizeCompact"
+			width="auto"  rememberSelections="false"
+			selectionChange="handleValueHelpDestinationClose"
+			mode="SingleSelectMaster" growing="true" 
+			growingThreshold="10">
+			
+			
+		</List>
+		<!--Begin of defect #24530  Below code commented and the press event included in the select event of List-->
+		<!-- <beginButton>
+			<Button text="{i18n>DestinationF4.OKButton}" press="handleValueHelpDestinationClose" />
+		</beginButton> -->
+		<!--End of defect #24530  -->
+		<endButton>
+			<Button text="{i18n>DestinationF4.CancelButton}" press="_handleDestinationF4Close" />
+		</endButton>
+
+	</Dialog>
+</core:FragmentDefinition>
+<!-- End of defect Id #24530 created a new Destination fragment-->

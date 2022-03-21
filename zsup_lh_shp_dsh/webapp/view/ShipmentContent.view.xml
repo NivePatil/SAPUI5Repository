@@ -1,0 +1,770 @@
+<mvc:View xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:variant="sap.ui.comp.variants"
+	xmlns:semantic="sap.m.semantic"
+	controllerName="com.slb.sup.lh.shipment.monitor.zsuplhshpdsh.controller.ShipmentContent"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<semantic:FullscreenPage
+		id="pageShipmentContent"
+		title="{i18n>SHIPMENT_CONTENT_TITLE}" enableScrolling="true"
+		showNavButton="true" navButtonPress="onBackNav" showFooter="true">
+		<semantic:content>
+
+			<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+				<items>
+					<HBox>
+					
+						<Label text="{i18n>ShipmentNum}" visible="false"
+							class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiMediumMarginBeginEnd sapUiMediumMarginBottom" />
+						<Input id="inpShipmentNo" editable="false" enabled="false" visible="false"/>
+					</HBox>
+					<HBox class="sapUiLargeMarginBeginEnd">
+
+						<Label text="{i18n>TotalNoHU}" visible="false"
+							class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiLargeMarginBeginEnd " />
+						<Input id="inpTotalNoOfHU" editable="false" enabled="false" visible="false" />
+						
+					</HBox>
+				</items>
+			</FlexBox>
+
+			<Panel id="idPanelShipmentContentDelv" expandable="true" headerText="{i18n>PanelTitleDelivery}" 
+				expanded="true">
+
+				<table:Table id="TblShpConDelivery" columnMove="onTblDelShipContentColumnMove"
+					threshold="50" visibleRowCount="6" filter="onColFilterDelv"
+					class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom"
+					visibleRowCountMode="Fixed" rows="{ShipmentContentDelvModel>/}"
+					selectionMode="None" noData="No Data">
+					<!-- Start of changes for RFC# 7000016440 : Fiori Upgrade - Replacing table:toolbar with table:extension -->
+					<table:extension>
+					<!-- Start of changes for RFC 7000016440 CD 2000036661 : F1D Upgrade : Removed FlexBox and HBox and inserted buttons in OverflowToolbar separated by ToolbarSpacer -->
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<!-- Start of changes for CD# 2000025529 : Apply Variant Management to the Outbound STO table -->
+							<variant:VariantManagement variantItems="{ContentVariantsModel>/ContentVariants}" select="onSelectSTOVariant" save="onSaveSTOVariantAs" enabled="true" 
+													manage="onManageSTOVariants" showExecuteOnSelection="false" showShare="false" id="ContentVariantManagement">
+							<variant:variantItems>
+								<variant:VariantItem text="{ContentVariantsModel>Name}" key="{ContentVariantsModel>Key}"/>
+							</variant:variantItems>
+							</variant:VariantManagement>
+							<!-- End of changes for CD# 2000025529 : Apply Variant Management to the Outbound STO table -->
+						<!-- Start of changes for CD# 2000025529 : Adding Download Cl functionality to the Content Delivery table -->
+								<Button id="BtnIEShpContDelDownloadCl" text="{i18n>IEShipContDelTblTbBtnDwnldClTxt}" type="Emphasized" class="sapUiTinyMarginEnd" visible="false"
+										tooltip="{i18n>IEShipContDelTblTbBtnDwnldClTxt}" press="handleIEShpContDelDownloadClPress"  />
+						<!-- End of changes for CD# 2000025529 : Adding Download Cl functionality -->
+						<Button id="BtnPrintDocs" text="{i18n>PrintDocs}"
+									type="Emphasized" class="sapUiTinyMarginEnd"
+									tooltip="{i18n>ToolTipPrintDocs}" 
+									press="OnClickPrintDocs" /> 
+									
+						<!-- start of RFC#7000013937:CD#2000031553 : For ZPAK print button functionality -->			
+						 <Button id="BtnZPAKPrintDocs" text="{i18n>PrintZPAKDocs}"
+									type="Emphasized" class="sapUiTinyMarginEnd"
+									tooltip="{i18n>ToolTipPrinZPAKtDocs}" 
+									press="onZPAKPrintPress" /> 	  		
+						<!-- End of RFC#7000013937:CD#2000031553 : For ZPAK print button functionality -->
+									
+						<Button icon="sap-icon://download" type="Emphasized"
+									class="sapUiTinyMarginEnd"
+									press="OnClickDownloadShipmentContent" /> 			
+						
+							<Button id="BtnPersonalizeShipmentContent"
+								icon="sap-icon://action-settings" type="Emphasized"
+								class="sapUiTinyMarginEnd" tooltip="{i18n>ToolTipShipConPersonalizationSettings}"
+								width="2em" press="OnClickPersonalizeShipmentContent" />
+					</OverflowToolbar>
+					<!-- End of changes for RFC 7000016440 CD 2000036661 : F1D Upgrade : Removed FlexBox and HBox and inserted buttons in OverflowToolbar separated by ToolbarSpacer -->
+				</table:extension>	
+				<!-- End of changes for RFC# 7000016440 : Fiori Upgrade - Replacing table:toolbar with table:extension -->
+					<table:columns>
+						<table:Column width="6em" name="{i18n>ShpConTableColDelivery}"
+							filterProperty="DeliveryNum" sortProperty="DeliveryNum"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColDelivery}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>DeliveryNum}" />
+							</table:template>
+						</table:Column>
+
+
+						<table:Column width="4em" name="{i18n>ShpConTableColItem}"
+							filterProperty="DelvItem" sortProperty="DelvItem"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColItem}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>DelvItem}" />
+							</table:template>
+						</table:Column>
+						
+							<table:Column width="7em" name="{i18n>Batch}"
+							filterProperty="Batch" sortProperty="Batch"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>Batch}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>Batch}" />
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="6em" name="{i18n>ShpConTableColMaterial}"
+							filterProperty="Material" sortProperty="Material"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColMaterial}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>Material}" />
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="6em" visible="false" name="{i18n>ShpConTableColMaterialDesc}"
+							filterProperty="MatDesc" sortProperty="MatDesc"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColMaterialDesc}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>MatDesc}" />
+							</table:template>
+						</table:Column>
+						
+						
+						
+						<table:Column width="3em" name="{i18n>ShpConTableColDG}"
+							filterProperty="IndDangGoods" sortProperty="IndDangGoods"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColDG}" />
+							<table:template>
+							<!-- start of RFC#7000013937:CD#2000031553:display backend value without formatter -->
+							<Text text="{ShipmentContentDelvModel>IndDangGoods}" />
+							<!-- end of RFC#7000013937:CD#2000031553:display backend value without formatter -->
+							</table:template>
+						</table:Column>
+						
+						<table:Column   width="4em" id="id_ShiptoParty" name="{i18n>StoPNum}"
+						 filterProperty="ShiptoParty"
+						sortProperty="ShiptoParty" defaultFilterOperator="StartsWith">
+						<Label text="{i18n>StoPNum}"/>
+						<table:template>
+						  <Text text="{ShipmentContentDelvModel>ShiptoParty}" />  
+						 
+						</table:template>
+					</table:Column>
+					<table:Column   width="4em" id="id_SoldtoParty" name="{i18n>StoPNumRef}"
+						filterProperty="SoldtoParty"
+						sortProperty="SoldtoParty" defaultFilterOperator="StartsWith">
+						<Label text="{i18n>StoPNumRef}"/>
+						<table:template>
+						  <Text text="{ShipmentContentDelvModel>SoldtoParty}" />  
+						 
+						</table:template>
+					</table:Column>
+						<table:Column   width="4em"  name="{i18n>HSCode}"
+						 filterProperty="ComdtyImpCode"
+						sortProperty="ComdtyImpCode" defaultFilterOperator="StartsWith">
+						<Label text="{i18n>HSCode}"/>
+						<table:template>
+						  <Text text="{ShipmentContentDelvModel>ComdtyImpCode}" />  
+						 
+						</table:template>
+					</table:Column>
+					 
+						<table:Column   width="4em" name="{i18n>CountryOfOrigin}"
+						 filterProperty="CountryOfOrigin"
+						sortProperty="CountryOfOrigin" defaultFilterOperator="StartsWith">
+						<Label text="{i18n>CountryOfOrigin}"/>
+						<table:template>
+						  <Text text="{ShipmentContentDelvModel>CountryOfOrigin}" />  
+						 
+						</table:template>
+					</table:Column>
+						
+						
+						<table:Column width="4em" name="{i18n>ShpConTableColDelvQty}"
+							filterProperty="DelvQty" sortProperty="DelvQty"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColDelvQty}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>DelvQty}" />
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="4em" visible="false" name="{i18n>ShpConTableColUnit}"
+							filterProperty="DelvSlsUom" sortProperty="DelvSlsUom"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColUnit}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>DelvSlsUom}" />
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="7em" name="{i18n>ShpConTableColHandlingUnit}"
+							filterProperty="HandlingUnit" sortProperty="HandlingUnit"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColHandlingUnit}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>HandlingUnit}" />
+							</table:template>
+						</table:Column>
+						
+							<table:Column width="7em" name="{i18n>LowerlevelHU}"
+							filterProperty="LowLvlHu" sortProperty="LowLvlHu"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>LowerlevelHU}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>LowLvlHu}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" visible="false" name="{i18n>HUID2}"
+							filterProperty="ExtHuId2" sortProperty="ExtHuId2"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>HUID2}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ExtHuId2}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" visible="false" name="{i18n>ShpConTableColPckgMaterial}"
+							filterProperty="PckgMaterial" sortProperty="PckgMaterial"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColPckgMaterial}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>PckgMaterial}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" visible="false" name="{i18n>ShpConTableColPckgMaterialDesc}"
+							filterProperty="PckgMatDesc" sortProperty="PckgMatDesc"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColPckgMaterialDesc}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>PckgMatDesc}" />
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="7em" visible="false" name="{i18n>ShpConTableColHULinkedTo}"
+							filterProperty="IndHuLinkedTo" sortProperty="IndHuLinkedTo"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColHULinkedTo}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>IndHuLinkedTo}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" visible="false" name="{i18n>ShpConTableColBaseQtyPacked}"
+							filterProperty="BaseQtyPckd" sortProperty="BaseQtyPckd"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColBaseQtyPacked}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>BaseQtyPckd}" />
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="7em" visible="false" name="{i18n>ShpConTableColBaseUoMPckdQty}"
+							filterProperty="BaseUomPckdqty" sortProperty="BaseUomPckdqty"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColBaseUoMPckdQty}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>BaseUomPckdqty}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="5em" name="{i18n>ShpConTableColPlant}"
+							filterProperty="Plant" sortProperty="Plant"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColPlant}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>Plant}" />
+							</table:template>
+						</table:Column>
+						
+							<table:Column width="4em" name="{i18n>ShpConTableColSloc}"
+							filterProperty="Sloc" sortProperty="Sloc"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColSloc}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>Sloc}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" id="id_fromCountry" name="{i18n>ShpConTableColShipFromCountry}"
+							filterProperty="ShipfromCountry" sortProperty="ShipfromCountry"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColShipFromCountry}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ShipfromCountry}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" id="id_ToCountry" name="{i18n>ShpConTableColShipToCountry}"
+							filterProperty="ShiptoCountry" sortProperty="ShiptoCountry"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColShipToCountry}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ShiptoCountry}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" name="{i18n>ShpConTableColRefDoc}"
+							filterProperty="RefDocNum" sortProperty="RefDocNum"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColRefDoc}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>RefDocNum}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" name="{i18n>ShpConTableColRefItem}"
+							filterProperty="RefDocItem" sortProperty="RefDocItem"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColRefItem}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>RefDocItem}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" visible="false" name="{i18n>ShpConTableColCustPO}"
+							filterProperty="CustPoNum" sortProperty="CustPoNum"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColCustPO}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>CustPoNum}" />
+							</table:template>
+						</table:Column>
+
+					<table:Column width="7em" visible="true" name="{i18n>BillOfEntry}"
+							filterProperty="BillOfEntry" sortProperty="BillOfEntry"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>BillOfEntry}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>BillOfEntry}" />
+							</table:template>
+						</table:Column>
+						
+				 
+						
+				<table:Column width="7em" visible="false" name="{i18n>VendorLF}"
+							filterProperty="VendorLF" sortProperty="VendorLF"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>VendorLF}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>VendorLF}" />
+							</table:template>
+						</table:Column>		
+						
+						<table:Column width="7em" visible="false" name="{i18n>GoodsSupplierWL}"
+							filterProperty="GoodsSupplierWL" sortProperty="GoodsSupplierWL"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>GoodsSupplierWL}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>GoodsSupplierWL}" />
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="7em" visible="false" name="{i18n>ZZadhocPickUp}"
+							filterProperty="ZZadhocPickUp" sortProperty="ZZadhocPickUp"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ZZadhocPickUp}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ZZadhocPickUp}" />
+							</table:template>
+						</table:Column>
+								
+						<table:Column width="7em" visible="false" name="{i18n>ZSdropShipLocation}"
+							filterProperty="ZSdropShipLocation" sortProperty="ZSdropShipLocation"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ZSdropShipLocation}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ZSdropShipLocation}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em" visible="false" name="{i18n>ZNConsignTo}"
+							filterProperty="ZNConsignTo" sortProperty="ZNConsignTo"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ZNConsignTo}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ZNConsignTo}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"  visible="false" name="{i18n>LEPreClearance}"
+							filterProperty="LEPreClearance"  
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>LEPreClearance}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>LEPreClearance}" />
+							</table:template>
+						</table:Column>		
+								
+						<!-- <table:Column width="7em"   name="{i18n>DeliveryClassType}"
+							filterProperty="DeliveryClassType" sortProperty="DeliveryClassType" visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>DeliveryClassType}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>DeliveryClassType}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>ProcessClass}"
+							filterProperty="ProcessClass" sortProperty="ProcessClass" visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ProcessClass}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ProcessClass}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"    name="{i18n>DelItemCateType}"
+							filterProperty="DelItemCateType" sortProperty="DelItemCateType" visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>DelItemCateType}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>DelItemCateType}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>SPIIndicator}"
+							filterProperty="SPIIndicator" sortProperty="SPIIndicator" visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>SPIIndicator}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>SPIIndicator}" />
+							</table:template>
+						</table:Column>		 -->
+								
+						<table:Column width="7em"   name="{i18n>NoOfTruck}"
+							filterProperty="NoOfTruck"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>NoOfTruck}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>NoOfTruck}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>NoOfContainer}"
+							filterProperty="NoOfContainer"  visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>NoOfContainer}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>NoOfContainer}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>Oversize}"
+							filterProperty="Oversize"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>Oversize}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>Oversize}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>FLSAId}"
+							filterProperty="FLSAId"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>FLSAId}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>FLSAId}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>VehicleType}"
+							filterProperty="VehicleType"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>VehicleType}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>VehicleType}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>ReceivingZone}"
+							filterProperty="ReceivingZone"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ReceivingZone}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>ReceivingZone}" />
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>EMORDD}"
+							filterProperty="EMORDD"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>EMORDD}" />
+							<table:template>
+							<Text text="{path:'ShipmentContentDelvModel>EMORDD' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'MM/dd/yyyy'
+					                } }"/>	
+								 
+							</table:template>
+						</table:Column>		
+								
+						<table:Column width="7em"   name="{i18n>EMOIncidentId}"
+							filterProperty="EMOIncidentId"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>EMOIncidentId}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>EMOIncidentId}" />
+							</table:template>
+						</table:Column>		
+						
+						<table:Column width="7em"   name="{i18n>SWPSPoNumber}"
+							filterProperty="SWPSPoNumber"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>SWPSPoNumber}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>SWPSPoNumber}" />
+							</table:template>
+						</table:Column>		
+						
+						<table:Column width="7em"   name="{i18n>SWPSPoType}"
+							filterProperty="SWPSPoType" visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>SWPSPoType}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>SWPSPoType}" />
+							</table:template>
+						</table:Column>		
+						
+						<table:Column width="7em"   name="{i18n>SWPSPoNo}"
+							filterProperty="SWPSPoNo"   visible="false"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>SWPSPoNo}" />
+							<table:template>
+								<Text text="{ShipmentContentDelvModel>SWPSPoNo}" />
+							</table:template>
+						</table:Column>	
+
+<!-- extra fields -->						
+						<table:Column width="6em" name="{i18n>DeliveryClassType}"
+						
+						 tooltip="{i18n>DeliveryClassType}" visible="false"
+						sortProperty="DeliveryClassType" defaultFilterOperator="EQ">
+						<Label text="{i18n>DeliveryClassType}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'ShipmentContentDelvModel>DeliveryClassType'}, {path : 'ShipmentContentDelvModel>DeliveryClassTypeDesc'}], formatter:'.formatter.concatString'}" />
+						</table:template>
+					</table:Column>	
+						
+						
+						<table:Column width="6em" name="{i18n>ProcessClass}"
+						
+						 tooltip="{i18n>ProcessClass}" visible="false"
+						sortProperty="ProcessClass" defaultFilterOperator="EQ">
+						<Label text="{i18n>ProcessClass}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'ShipmentContentDelvModel>ProcessClass'}, {path : 'ShipmentContentDelvModel>ProcessClassDesc'}], formatter:'.formatter.concatString'}" />
+						</table:template>
+					</table:Column>	
+						
+							<table:Column width="6em" name="{i18n>DelItemCateType}"
+						
+						 tooltip="{i18n>DelItemCateType}" visible="false"
+						sortProperty="DelItemCateType" defaultFilterOperator="EQ">
+						<Label text="{i18n>DelItemCateType}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'ShipmentContentDelvModel>DelItemCateType'}, {path : 'ShipmentContentDelvModel>DelItemCateTypeDesc'}], formatter:'.formatter.concatString'}" />
+						</table:template>
+					</table:Column>	
+						
+						<table:Column width="6em" name="{i18n>SPIIndicator}"
+						 tooltip="{i18n>SPIIndicator}" visible="false"
+						sortProperty="SPIIndicator" defaultFilterOperator="EQ">
+						<Label text="{i18n>SPIIndicator}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'ShipmentContentDelvModel>SPIIndicator'}, {path : 'ShipmentContentDelvModel>SPIIndicatorDesc'}], formatter:'.formatter.concatString'}" />
+						</table:template>
+					</table:Column>	
+					
+					<table:Column width="6em" name="{i18n>DeliveryPriority}"
+						 tooltip="{i18n>DeliveryPriority}" visible="false"
+						sortProperty="DeliveryPriority" defaultFilterOperator="EQ">
+						<Label text="{i18n>DeliveryPriority}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'ShipmentContentDelvModel>DeliveryPriority'}, {path : 'ShipmentContentDelvModel>DeliveryPriorityDesc'}], formatter:'.formatter.concatString'}" />
+						</table:template>
+					</table:Column>	
+						<!--end of changes CD #2000025529: variant management-->
+						
+					</table:columns>
+
+
+				</table:Table>
+
+
+
+			</Panel>
+
+
+			<Panel id="idPanelShipmentContentHU" expandable="true" headerText="{i18n>PanelTitleHandlingUnit}" 
+				expanded="true">
+
+
+				<table:Table id="TblShpConHU" enableCellFilter="true" rowHeight="35"
+					threshold="50" visibleRowCount="10" filter="onColFilterHU"
+					class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom"
+					visibleRowCountMode="Fixed" rows="{HandlingUnitModel>/}"
+					selectionMode="None" noData="No Data">
+					<!-- Start of changes for RFC# 7000016440 : Fiori Upgrade - Replacing table:toolbar with table:extension -->
+					<table:extension>
+					<!-- Start of changes for RFC 7000016440 CD 2000036661 : F1D Upgrade : Removed FlexBox and HBox and inserted buttons in OverflowToolbar separated by ToolbarSpacer -->
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://download" type="Emphasized"
+							class="sapUiTinyMarginEnd"
+							press="OnClickDownloadHU" />
+						</OverflowToolbar>
+						<!-- End of changes for RFC 7000016440 CD 2000036661 : F1D Upgrade : Removed FlexBox and HBox and inserted buttons in OverflowToolbar separated by ToolbarSpacer -->
+					</table:extension>
+					<!-- End of changes for RFC# 7000016440 : Fiori Upgrade - Replacing table:toolbar with table:extension -->
+					<table:columns>
+					<!-- Start of changes for RFC# 7000016440 : Fiori Upgrade - width property is replaced with % from rem to adjust columns as per screen width -->
+						<table:Column width="14%" id="id_HU"
+							filterProperty="ExtHuId" sortProperty="ExtHuId"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColHandlingUnit}" />
+							<table:template>
+								<ObjectStatus  text="{HandlingUnitModel>ExtHuId}" state="{HandlingUnitModel>customState}"  />
+							</table:template>
+						</table:Column>
+						
+							<table:Column width="7em" visible="false"
+							filterProperty="PckgMaterial" sortProperty="PckgMaterial"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColPckgMaterial}" />
+							<table:template>
+								<Text text="{HandlingUnitModel>PckgMaterial}" wrapping="true" maxLines="2"/>
+							</table:template>
+						</table:Column>
+						
+						
+						<table:Column width="7em" visible="false"
+							filterProperty="PckgMatDesc" sortProperty="PckgMatDesc"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColPckgMaterialDesc}" />
+							<table:template>
+								<Text text="{HandlingUnitModel>PckgMatDesc}" wrapping="true" maxLines="2"/>
+							</table:template>
+						</table:Column>
+
+
+				  	<!-- <table:Column width="6em"
+							filterProperty="ExtHuId" sortProperty="ExtHuId"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColHUID2ExtRef}" />
+							<table:template>
+								<Text text="{HandlingUnitModel>ExtHuId}" />
+							</table:template>
+						</table:Column>  -->  
+
+
+						<table:Column width="12%"
+							filterProperty="GrossWeight" sortProperty="GrossWeight"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColNetWt}" />
+							<table:template>
+								<Input value="{HandlingUnitModel>GrossWeight}"  
+								 editable="{statusModel>/editable}"
+								id="id_GrossWeight" 
+								    />
+							</table:template>
+						</table:Column>
+
+
+						<table:Column width="10%"
+							filterProperty="WeightUnit" sortProperty="WeightUnit"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColWtUnit}" />
+							<table:template>
+								<!--  <Text text="{HandlingUnitModel>WeightUnit}" />  --> 
+								<!-- <Input value="{parts:[{path : 'CMT'}, {path : 'Carat'}], formatter:'.formatter.concatString'}"  -->
+								<Input value="{HandlingUnitModel>WeightUnit}" editable="{parts:[{path :'HandlingUnitModel>WeightUnit'}], formatter:'.formatter.fnEditable'}"
+								valueHelpOnly="true"  id="id_Gwt" showValueHelp="true" valueHelpRequest="handleGrossWt"  enabled="{statusModel>/editable}"
+								  />   
+							</table:template>
+						</table:Column>
+
+						<table:Column width="12%"
+							filterProperty="Length" sortProperty="Length"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColLength}" />
+							<table:template>
+								<Input value="{HandlingUnitModel>Length}"  editable="{statusModel>/editable}"  />
+							</table:template>
+						</table:Column>
+
+						<table:Column width="12%"
+							filterProperty="Width" sortProperty="Width"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColBreadth}" />
+							<table:template>
+								<Input value="{HandlingUnitModel>Width}"   editable="{statusModel>/editable}" />
+							</table:template>
+						</table:Column>
+
+						<table:Column width="8%"
+							filterProperty="Height" sortProperty="Height"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColHeight}" />
+							<table:template>
+								<Input value="{HandlingUnitModel>Height}" editable="{statusModel>/editable}"  />
+							</table:template>
+						</table:Column>
+
+						<table:Column width="12%"
+							filterProperty="UomLwh" sortProperty="UomLwh"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColUnit}" />
+							<table:template>
+							<!-- 	<Text text="{HandlingUnitModel>UomLwh}" />  -->
+								<Input value="{HandlingUnitModel>UomLwh}" editable="{parts:[{path :'HandlingUnitModel>UomLwh'}], formatter:'.formatter.fnEditable'}"
+								valueHelpOnly="true"  id="id_LbhUnit" showValueHelp="true" valueHelpRequest="handleLbhUnit" enabled="{statusModel>/editable}"  /> 
+							</table:template>
+						</table:Column>
+
+						<table:Column width="10%"
+							filterProperty="Volume" sortProperty="Volume"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColNetVol}" />
+							<table:template>
+								<Input value="{HandlingUnitModel>Volume}"  editable="{statusModel>/editable}" />
+							</table:template>
+						</table:Column>
+
+
+						<table:Column width="10%"
+							filterProperty="VolUnit" sortProperty="VolUnit"
+							defaultFilterOperator="StartsWith">
+							<Label text="{i18n>ShpConTableColVolUnit}" />
+							<table:template>
+								<!-- <Text text="{HandlingUnitModel>VolUnit}" />  -->
+								<Input value="{HandlingUnitModel>VolUnit}" editable="{parts:[{path :'HandlingUnitModel>VolUnit'}], formatter:'.formatter.fnEditable'}"
+								valueHelpOnly="true"  id="id_VolUnit" showValueHelp="true" valueHelpRequest="handleVolUnit" enabled="{statusModel>/editable}"  /> 
+							</table:template>
+						</table:Column>
+					<!-- End of changes for RFC# 7000016440 : Fiori Upgrade - width property is replaced with % from rem to adjust columns as per screen width -->
+					</table:columns>
+
+
+				</table:Table>
+
+			</Panel>
+		</semantic:content>
+		
+		<semantic:customFooterContent>
+
+			<Button id="BtnSaveShipmentContent" text="{i18n>SaveForShipmentContent}" type="Accept" class="sapUiSmallMarginEnd" press="handleItemsUpdate"
+				icon="sap-icon://save" tooltip="{i18n>ToolTipShipConSaveShipmentContent}" />
+		</semantic:customFooterContent>
+		
+	</semantic:FullscreenPage>
+
+</mvc:View>

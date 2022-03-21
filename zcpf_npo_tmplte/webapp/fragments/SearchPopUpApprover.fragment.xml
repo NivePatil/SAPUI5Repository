@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="searchApproverDialog" contentWidth="400px" contentHeight="50px" title="{i18n>SearchPopUpNameApprover}">
+		<subHeader>
+			<Toolbar>
+				<SearchField id = "IdSearchFieldApprover" search ="onPressSrchPopUpApproverSubmit" placeholder="{i18n>GINId}">
+				</SearchField>
+			</Toolbar>
+		</subHeader>
+		<!-- Submit Action -->
+		<beginButton>
+		<Button text="{i18n>Submit}" press="onPressSrchPopUpApproverSubmit"/>
+		</beginButton>
+		<!-- Popup Close -->
+		<endButton>
+		<Button text="{i18n>Cancel}" press="onPressSrchPopUpApproverCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

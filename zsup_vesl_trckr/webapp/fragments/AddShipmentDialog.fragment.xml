@@ -1,0 +1,310 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core">
+	<Dialog title = "{i18n>AddShipPopUpTitle}" class="sapUiSizeCompact" contentWidth="100%"
+	contentHeight="80%" resizable="true" validateFieldGroup="onValidateAddShipScreenMandatory"
+	afterClose="onAfterAddShipScreenClose" >
+		
+	 <form:Form editable="true">
+			<form:layout>
+				<form:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="1"
+					emptySpanL="1"
+					emptySpanM="1"
+					emptySpanS="0"
+					columnsXL="3"
+					columnsL="2"
+					columnsM="2"
+					singleContainerFullSize="false" />
+			</form:layout>
+			<form:formContainers>
+				<form:FormContainer>
+					<form:formElements>
+						<form:FormElement>
+							<form:label>
+									<Label text="{i18n>AddShip.FreightForwarder}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnFreightForwarder" editable="false"/>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>AddShip.VesselNo}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnVesselNo" editable="false">
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.FlightOrVoyageNumber}"/>
+							</form:label>
+							<form:fields>
+								<Input id="id_AddShipScrnFlightVoyageNo" editable="false"/>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.VesselStatus}" />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnVesselStatus" editable="false">
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.CurrentPort}"/>
+							</form:label>
+							 <MultiInput id="id_AddShipScrnCurrentPort" editable="false">
+							</MultiInput>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.LoadPort}"/>
+							</form:label>
+							 <MultiInput id="id_AddShipScrnLoadPort" editable="false">
+							</MultiInput>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.TransLoadIndicator}" />
+							</form:label>
+							<form:fields>
+								<CheckBox  id= "id_AddShipScrnTransLoadInd" editable="false"/>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.TransLoadPort}"/>
+							</form:label>
+							<form:fields>
+								 <MultiInput id="id_AddShipScrnTransLoadPort" editable="false" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.DischargePort}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnDischargePort" editable="false">
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.ExistingShipmentNo}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnExistingShipmentNo" editable="false">
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+
+					</form:formElements>
+				</form:FormContainer>
+				<form:FormContainer>
+					<form:formElements>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.ForwarderRefNo}"/>
+							</form:label>
+							<form:fields>
+								<Input id="id_AddShipScrnForwarderRefNo" editable="false">
+								</Input>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.BookingNo}"/>
+							</form:label>
+							<form:fields>
+								<Input id="id_AddShipScrnBookingNo" editable="false">
+								</Input>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.VesselWeight}"/>
+							</form:label>
+							<form:fields>
+								<Input id="id_AddShipScrnVesselWeight" editable="false">
+								</Input>
+								<MultiInput id="id_AddShipScrnVesselWeightUnit" editable="false">
+									<layoutData>
+										<l:GridData span="XL4 L4 M4 S4" />
+									</layoutData>
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.CountOfContainer}" />
+							</form:label>
+							<form:fields>
+								<Input id="id_AddShipScrnCountOfContnr" editable="false">
+								</Input>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.SPSSHStatus}" />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnSPSSHStatus"  showValueHelp="true"
+								 valueHelpOnly="true" valueHelpRequest="handleAddShipScrnSPSSHStatusF4Open" tokenUpdate="onAddShipScrnSPSShipStatusTokenChange" />
+
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.PLDLoadDate}" />
+							</form:label>
+							<form:fields>
+								<DatePicker  id="id_AddShipScrnPLDLoadDate" 
+								value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+									UTC: true,
+							        pattern: 'dd-MMM-yyyy'
+									}}"
+									editable="false"
+								/>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.PLDDischargeDate}" />
+							</form:label>
+							<form:fields>
+								<DatePicker  id="id_AddShipScrnPLDDelivDate" 
+								value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+									UTC: true,
+							        pattern: 'dd-MMM-yyyy'
+									}}"
+									editable="false"
+								/>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.ACTLoadDate}" />
+							</form:label>
+							<form:fields>
+								<DatePicker  id="id_AddShipScrnActLoadDate" 
+								value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+									UTC: true,
+							        pattern: 'dd-MMM-yyyy'
+									}}"
+									editable="false"
+								/>
+							</form:fields>
+						</form:FormElement>
+
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.ACTDischargeDate}" />
+							</form:label>
+							<form:fields>
+								<DatePicker  id="id_AddShipScrnActDelivDate" 
+								value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+									UTC: true,
+							        pattern: 'dd-MMM-yyyy'
+									}}"
+									editable="false"
+								/>
+							</form:fields>
+						</form:FormElement>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.VesselInfo}" />
+							</form:label>
+							<form:fields>
+								<Input id="id_AddShipScrnVesselInfo" value="" editable="false"/>
+							</form:fields>
+						</form:FormElement>
+					</form:formElements>
+				</form:FormContainer>
+				
+				<form:FormContainer>
+					<form:formElements>
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>AddShip.AddNewShipments}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_AddShipScrnNewShipments" showValueHelp="true" fieldGroupIds="addShipMandate" required="true"
+									valueHelpOnly="true" valueHelpRequest="handleAddShipScrnShipmentNoF4Open" tokenUpdate="onAddShipScrnShipmentTokenChange">
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+					</form:formElements>
+				</form:FormContainer>
+				
+			</form:formContainers>
+
+		</form:Form>
+		<table:Table id="id_AddShipScrnShipmentTbl"
+			rows="{shipmentTblModel>/shipmentData}"
+			class="sapUiResponsiveMargin" threshold="5" visibleRowCount="1"
+			selectionMode="None" noData="{i18n>noDataValueHelp}"
+			enableSelectAll="false">
+			<table:columns>
+				<table:Column width="auto">
+					<Label text="{i18n>AddShip.ShipmentNo}"
+						tooltip="{i18n>AddShip.ShipmentNo}" />
+					<table:template>
+						<Text text="{shipmentTblModel>ShipmentNo}" />
+					</table:template>
+				</table:Column>
+				<table:Column width="auto">
+					<Label text="{i18n>AddShip.EreqID}"
+						tooltip="{i18n>AddShip.EreqID}" />
+					<table:template>
+						<Input value="{shipmentTblModel>EreqNo}"/>
+					</table:template>
+				</table:Column>
+				<table:Column width="auto">
+					<Label text="{i18n>AddShip.BOL_AWB}" required="true"
+						tooltip="{i18n>AddShip.BOL_AWB}" />
+					<table:template>
+						<Input required="true" value="{shipmentTblModel>BolNo}"/>
+					</table:template>
+				</table:Column>
+				<table:Column width="auto">
+					<Label text="{i18n>AddShip.SPSSHStatus}"
+						tooltip="{i18n>AddShip.SPSSHStatus}" />
+					<table:template>
+						<MultiInput showValueHelp="true" tokens="{ path: 'shipmentTblModel>ShipStatusSPS',  templateShareable:'true'}" editable="false" >
+									 <tokens >
+										 <Token key="{shipmentTblModel>title}" text="{shipmentTblModel>description}" />
+									 </tokens>
+						</MultiInput>
+					</table:template>
+				</table:Column>
+			</table:columns>
+		</table:Table>
+	<buttons>
+		<Button text="{i18n>Add}" type="Accept"  press="handleAddShipScreenCreate" />
+		<Button text="{i18n>Clear}" type="Emphasized"  press="handleAddShipScreenClear" />
+		<Button text="{i18n>Cancel}" type="Reject"  press="handleAddShipScreenClose"   />
+		
+	</buttons>
+	</Dialog>
+</core:FragmentDefinition>

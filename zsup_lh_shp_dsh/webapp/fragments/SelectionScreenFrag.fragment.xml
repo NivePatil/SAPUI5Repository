@@ -1,0 +1,190 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:variant="sap.ui.comp.variants">
+	<Dialog title = "{i18n>SelectionScreenPopUpTitle}" id="SelectionScreenFrag"
+	class="sapUiSizeCompact" contentWidth="600px" contentHeight="900px" >
+	 <!--  start of changes CD #2000025529: variant management-->
+	 
+		<variant:VariantManagement variantItems="{VariantsModel>/}" select="onSelect" save="onSave" enabled="true" manage="onManage" showExecuteOnSelection="false" showShare="false" id="Variants">
+					<variant:variantItems>
+						<variant:VariantItem text="{VariantsModel>Name}" key="{VariantsModel>Key}"/>
+					</variant:variantItems>
+				</variant:VariantManagement>		
+	 
+	 <!--  end of changes CD #2000025529: variant management-->
+	<l:Grid
+		class="sapUiResponsiveMargin sapUiSmallMarginEnd" 
+		hSpacing="2"
+		defaultSpan="L6 M6 S10">
+		<l:content>
+			<Label text="{i18n>SHType}" required="true" textDirection="RTL" />
+				<ComboBox width="100%"
+				id="id_SHType"
+				showSecondaryValues= "true" selectionChange="onSelectionChangeSHType"
+				
+				 items="{
+					path: '/F4_Shipment_TypeSet',
+					sorter: { path: 'ShpmntType' }
+				}"> 
+				
+				
+				 <core:ListItem key="{ShpmntType}" text="{ShpmntType}" additionalText = "{ShtypDesc}"/> 
+				
+			</ComboBox>
+				 
+				
+			 
+			
+			
+			<Label text="{i18n>FreightForwarder}" required="true" textDirection="RTL"/>
+		<!-- 	<MultiInput id="id_FreightForwarder" value="{selectionScreenModel>/freightFwder}" showValueHelp="true"
+			 valueHelpOnly="true"  /> -->
+<!-- 			 <MultiComboBox -->
+<!-- 				id="id_FreightForwarder" -->
+<!-- 				showSecondaryValues= "true"> -->
+				<!-- showValueHelp="true"
+				valueHelpRequest="handleFreightForwarderF4Open"> -->
+				<!-- items="{
+					path: '/ShipmentSet',
+					sorter: { path: 'FwdAgent' }
+				}"> -->
+<!-- 				  <core:ListItem key="{FwdAgent}" text="{FwdAgent}"/>   -->
+
+			<MultiInput id="id_FreightForwarder" value="{selectionScreenModel>freightFwder}" showValueHelp="true"  
+ 			valueHelpOnly="true" valueHelpRequest="handleFreightForwarderF4Open" tokenUpdate="onSelectionScreenTokenChange" />
+			
+			
+			
+			
+			<!-- 	<MultiInput id="id_SHStatus" value="{selectionScreenModel>shStatus}" showValueHelp="true"  -->
+			<Label text="{i18n>SHStatus}" required="true" textDirection="RTL" />
+						
+			<MultiInput id="id_SHStatus" value="{selectionScreenModel>shStatus}"  showValueHelp="true"  
+			valueHelpOnly="true" valueHelpRequest="handleSHStatusF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+
+			
+			<Label text="{i18n>IEPreClearence}" />
+		<MultiInput id="id_IEPreClearence" value="{selectionScreenModel>iePreClrStatus}" showValueHelp="true"  
+		 valueHelpOnly="true" valueHelpRequest="handleIEPreClrF4Open" tokenUpdate="onSelectionScreenTokenChange" />
+
+			
+			<Label text="{i18n>ShipToCountry}" /> 
+		 <MultiInput id="id_ShipToCountry" value="{selectionScreenModel>shipToCountry}" showValueHelp="true"   
+		 valueHelpOnly="true" valueHelpRequest="handleShipToCountryF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+
+			
+			<Label text="{i18n>ShipFromCountry}" />
+			<MultiInput 
+				id="id_ShipFromCountry"
+				value="{selectionScreenModel>shipFromCountry}" showValueHelp="true" 
+		valueHelpOnly="true" valueHelpRequest="handleShipFromCountryF4Open" tokenUpdate="onSelectionScreenTokenChange"/>
+					
+			<Label text="{i18n>Plant}" required="true" textDirection="RTL" />
+			<MultiInput 
+				id="id_Plant"
+				value="{selectionScreenModel>Plant}" showValueHelp="true" 
+		valueHelpOnly="true" valueHelpRequest="handlePlantsF4Open" enabled="true" tokenUpdate="onSelectionScreenTokenChange"/>
+		
+			<Label text="" required="false" textDirection="RTL" visible="false"/>
+			<MultiComboBox visible= "false"
+				id="id_Dummy"
+				showSecondaryValues= "true">
+				<!-- items="{
+					path: '/ShipmentSet',
+					sorter: { path: 'Plant' }
+				}"> -->
+				<!-- <core:ListItem key="{Plant}" text="{Plant}"  -->
+				<core:ListItem key="1004" text="1004" 
+				
+				/>
+			</MultiComboBox>
+			
+			<Label text="{i18n>ShipmentNo}"/>
+                     
+                     <Input id="id_ShipmentNo" value="" maxLength="10" liveChange="selectionScreenShipNoChange" change="selectionScreenShipNoChange">
+                     <layoutData>
+                                  <l:GridData
+                                         span="L3 M1 S8" 
+                                         
+                                         linebreakL="false"
+                                         linebreakM="true"
+                                         linebreakS="true"/>
+                           </layoutData>
+                           </Input>
+                     <Input id="id_ShipmentNo2" value="" maxLength="10" liveChange="onliveChangeNumericField" change="selectionScreenShipNoChange">
+                     <layoutData>
+                                  <l:GridData
+                                         span="L3 M1 S8" 
+                                         
+                                         linebreakL="false"
+                                         linebreakM="true"
+                                         linebreakS="true"/>
+                           </layoutData>
+                     </Input>
+                     
+                     
+                     
+                     <Label text="{i18n>SHCreationDate}" required="true" textDirection="RTL" />
+                   <!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+                   <!-- Start of change RFC#7000016711 CD#2000043148:Date Format change for timezone issue -->  
+                     <DatePicker
+                     id="id_CreationDateFrom"
+                     value="{path:'headerTableModel>/fromDateInSelection', type:'sap.ui.model.type.Date', formatOptions: {
+						UTC: true,
+						pattern: 'dd-MMM-yyyy'
+						}}"
+                     change="handleSelectionScreenChangeDate">
+                     <layoutData>
+                                  <l:GridData
+                                         span="L3 M6 S8"/>
+                           </layoutData>
+                     </DatePicker>
+                     
+                     
+                     <DatePicker
+                     id="id_CreationDateTo"
+                     value="{path:'headerTableModel>/toDateInSelection', type:'sap.ui.model.type.Date', formatOptions: {
+						UTC: true,
+						pattern: 'dd-MMM-yyyy'
+						}}"
+                     change="handleSelectionScreenChangeDate">
+                     <layoutData>
+                                  <l:GridData
+                                         span="L3 M6 S8"/>
+                           </layoutData>
+                     </DatePicker>
+                   <!-- End of change RFC#7000016711 CD#2000043148:Date Format change for timezone issue -->
+                   <!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->  
+
+			
+			<Label text="{i18n>OpenSHOnly}" required="true" textDirection="RTL"/>
+			<CheckBox 
+			id = "chkBoxId_OpenSHOnly" selected="true" select="onSelectCheckBox"
+			/>
+			<!-- Start of GAP#6000000204,DIS-G-54784:LH Fiori Dashboard - Enable actual cost submission - Direct Sales Only-->  
+			<Label text="{i18n>SelectionScreen.DirectSalesOnly}" required="true" textDirection="RTL"/>
+			<CheckBox id = "chkBoxId_DirectSalesOnly" selected="false" select="onSelectDirectSalesCheckBox"/>
+			<!-- End of GAP#6000000204,DIS-G-54784:LH Fiori Dashboard - Enable actual cost submission - Direct Sales Only-->
+			</l:content>
+		</l:Grid>
+			<Text text="{i18n>Header.SelectnSupportMsg}" class="sapUiSmallMarginBeginEnd" />
+	 
+			 <buttons>
+				<Button id="BtnSelectionScreenSave" text="{i18n>Save}" type="Accept"  press="handleSelectionScreenSave" />
+				<Button id="BtnSelectionScreenClear" text="{i18n>Clear}" type="Emphasized"  press="handleSelectionScreenClear" />
+				<Button id="BtnSelectionScreenCancel" text="{i18n>Cancel}" type="Reject"  press="handleSelectionScreenClose"   />
+			</buttons>
+	 
+				 
+			 
+	<!-- <beginButton>
+	<Button id="BtnSelectionScreenSave" text="{i18n>Save}" type="Accept"  press="handleSelectionScreenSave" hAlign="End" />
+	</beginButton>
+	
+	<endButton>
+	<Button id="BtnSelectionScreenCancel" text="{i18n>Cancel}" type="Reject"  press="handleSelectionScreenClose"   />
+	</endButton> -->
+	</Dialog>
+</core:FragmentDefinition>

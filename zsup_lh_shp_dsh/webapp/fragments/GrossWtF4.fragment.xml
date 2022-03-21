@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+xmlns="sap.m"
+xmlns:core="sap.ui.core">
+<Dialog contentWidth="400px" contentHeight="350px" title="Select Gross Weight">
+<subHeader>
+<Toolbar>
+<SearchField id = "IdSearchGrossWt"
+search ="handleSrchGrossWt">
+</SearchField>
+</Toolbar>
+</subHeader>
+<content>
+
+<List id="ListIdGrossWt" items="{GrossWtModel>/}" mode="SingleSelectMaster" selectionChange="onGrossWtListSelect">
+<StandardListItem title="{GrossWtModel>WeightUnit}"
+description="{GrossWtModel>UnitText}"> <!-- description="{Name2}"> -->
+</StandardListItem>
+</List>
+</content>
+<endButton>
+<Button text="Cancel" press="handleGrossWtF4SelectDialogclose"/>
+</endButton>
+</Dialog>
+</core:FragmentDefinition>
+

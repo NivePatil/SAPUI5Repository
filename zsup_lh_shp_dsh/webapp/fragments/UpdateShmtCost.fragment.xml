@@ -1,0 +1,97 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:table="sap.ui.table" xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout">
+	<Dialog title="{i18n>TitleUpdShpcost}" class="sapUiSizeCompact" contentWidth="60%" contentHeight="80%">
+		<beginButton>
+			<Button text="Save" type="Emphasized" press="saveCostUpdate" />
+		</beginButton>
+		<endButton>
+			<Button text="Close" press="handleShpCostDialogClose" />
+		</endButton>
+		<content>
+		<layout:VerticalLayout class="sapUiSmallMargin">
+		<layout:HorizontalLayout class="sapUiSmallMargin">
+				<Label text="{i18n>Cost.ShipNo}"  class="sapUiSmallMarginBeginEnd" />
+				<Text text="" id="id_Shpnum" class="sapUiSmallMarginBeginEnd"/>
+				
+				<Label text="{i18n>Cost.Pending}" class="sapUiSmallMarginBeginEnd" id="id_LblUpdPending"  />
+				<Text text="" id="id_UpdPending" class="sapUiSmallMarginBeginEnd"/>
+			<Label text="{i18n>Cost.Date}" id="id_Dt" class="sapUiSmallMarginBeginEnd" />	
+		<!--   	<Text text="" id="id_UpdPendingDt" class="sapUiSmallMarginBeginEnd"/>   -->
+		  	<Text id="id_UpdPendingDt" text="{path:'ShpcostUpdPndgDt', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'dd-MMM-yyyy', style: 'short',UTC: true, strictParsing: true}}"
+						/> 
+			</layout:HorizontalLayout>
+			
+			<layout:HorizontalLayout class="sapUiSmallMargin">
+				<Label text="{i18n>Cost.FFAgent}" class="sapUiSmallMarginBeginEnd" />
+				<Text text="" id="id_Agent" class="sapUiSmallMarginBeginEnd"/>
+			
+			</layout:HorizontalLayout>
+			
+			<layout:HorizontalLayout class="sapUiSmallMargin">
+				<Button text="{i18n>Cost.Add}" enabled="true" type="Emphasized" press="handleAddCost" class="sapUiSmallMarginBeginEnd" />
+				 <!--   <Button text="Replace Acc Code" enabled="true" type="Emphasized" press="handleRepalcePartner" class="sapUiSmallMarginBeginEnd"/> -->
+			</layout:HorizontalLayout>
+</layout:VerticalLayout>
+			<table:Table id="partnerTable"  class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom "
+				rows="{costModel>/}"  selectionMode="None" noData="No data for this Shipment">
+				<table:columns>
+				<table:Column width="4%" >
+						<Label text="Type" />
+						<table:template>
+							<Text id="id_CostType"   text="{costModel>AcccodeType}" />
+						</table:template>
+					</table:Column>
+					<table:Column width="9%" filterProperty="PartnerNum" sortProperty="PartnerNum"
+						defaultFilterOperator="StartsWith">
+						<Label text="{i18n>Cost.Acccode}" />
+						<table:template>
+						<Input value="{costModel>AccCode}" 
+				  id="id_AccCode"  enabled ="{parts:[{path : 'costModel>AcccodeType'}], formatter:'.formatter.editableCostRow'}" 						
+							valueHelpRequest="handleAccountTypeF4Open" showValueHelp="true"  valueHelpOnly="true"		 />
+						</table:template>
+					</table:Column>
+					<table:Column width="19%" >
+						<Label text="{i18n>Cost.Accdescr}" />
+						<table:template>
+							<Text text="{costModel>AcccodeDesc}"  id="id_AccDesc"/>
+						</table:template>
+					</table:Column>
+					<table:Column visible="false" >
+						<Label text="R" />
+						<table:template>
+							<CheckBox  id="id_R" selected="{costModel>id_R}"  editable="{costModel>editable}" 
+							 />
+						</table:template>
+					</table:Column>
+					<table:Column width="4%"  >
+						<Label text="D" />
+						<table:template>
+							<CheckBox id="id_D" selected="{costModel>id_D}"  
+							editable ="{parts:[{path : 'costModel>AcccodeType'}], formatter:'.formatter.editableCostRow'}"
+							 />
+						</table:template>
+					</table:Column>
+					<table:Column width="11%" >
+						<Label text="{i18n>Cost.Amount}" />
+						<table:template>
+							<Input id="id_Amount"   value="{costModel>Amount}"
+							 editable ="{parts:[{path : 'costModel>AcccodeType'}], formatter:'.formatter.editableCostRow'}" 
+							 liveChange="onLiveChangeCurrency" />
+							
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="8%">
+						<Label text="{i18n>Cost.Currency}" />
+						<table:template>
+							<Input value="{costModel>Currency}"  id="id_CostCurrency"
+							enabled ="{parts:[{path : 'costModel>AcccodeType'}], formatter:'.formatter.editableCostRow'}" 
+							valueHelpRequest="handleCurrencyF4Open" showValueHelp="true"  valueHelpOnly="true" />
+						</table:template>
+					</table:Column>	
+				</table:columns>
+			</table:Table>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

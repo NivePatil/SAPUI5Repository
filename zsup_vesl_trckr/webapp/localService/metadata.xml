@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZSUP_VESSEL_TRACKER_DASHBRD_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="F4_Shipment" sap:label="F4 Shipment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ShipmentNo"/>
+                </Key>
+                <Property Name="ShipmentNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Shipment No" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ShipStatusSAP" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Shipment Status SAP" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ShipStatusSAPDes" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Shipement Status Description" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ForwardingAgent" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Forwarding agent No." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="F4_Country" sap:label="F4 Country" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Country_Code"/>
+                    <PropertyRef Name="Country"/>
+                </Key>
+                <Property Name="Country_Code" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Country" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Country" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Nationality" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Nationality" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="F4_FwdAgent" sap:label="F4 FwdAgent" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FwdAgent"/>
+                </Key>
+                <Property Name="FwdAgent" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="FwdAgntName" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Name2" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Name 2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="City" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="City" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Country" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Country" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="VesselUpdate" sap:label="Vessel Update" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ShipmentNo"/>
+                    <PropertyRef Name="VesselCode"/>
+                    <PropertyRef Name="BolNo"/>
+                </Key>
+                <Property Name="ShipmentNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Shipment Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselCode" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="VesselCode" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BolNo" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Bill of Lading No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FlightVoyageNo" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Flight Or Voyage Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ForwardingAgent" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Forwarding agent No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EreqNo" Type="Edm.String" Nullable="false" MaxLength="51" sap:unicode="false" sap:label="EREQ No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ForwarderRefNo" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Forwarder Reference No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ShipStatusSPS" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Ship Status SPS" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselStatus" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Vessel status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LoadPortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Load Port Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLoadPortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Trans Load Port Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DischargePortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Discharge Port Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransloadInd" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Transload indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BookingNo" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Booking Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CurrentPort" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Current Port" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ShipContainerCnt" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Shipment Container Count" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unicode="false" sap:unit="VesselWeightUnit" sap:label="Vessel Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselWeightUnit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Vessel Weight Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="LoadPortDateP" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Load Port Date -P" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LoadPortDateA" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Load Port Date -A" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLoadPortDateP" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Trans Load Port Date -P" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLoadPortDateA" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Trans Load Port Date -A" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DiscPortDateP" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Disc Port Date -P" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DiscPortDateA" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Disc Port Date -A" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselInfoRec" Type="Edm.String" MaxLength="13" sap:unicode="false" sap:label="Vessel info record" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ReturnMsg" sap:label="Return Message" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="MsgID"/>
+                </Key>
+                <Property Name="MsgID" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Message Class" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MsgType" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Message number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MsgNo" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Message type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Message Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Msgv1" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Variable 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Msgv2" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Variable 2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="VesselDetail" sap:label="Vessel Detail" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ShipmentNo"/>
+                    <PropertyRef Name="VesselCode"/>
+                    <PropertyRef Name="BolNo"/>
+                </Key>
+                <Property Name="ShipmentNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Shipment Number" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="VesselCode" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="VesselCode" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="BolNo" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="BOL/AWB No." sap:creatable="false" sap:updatable="false"/>
+                <Property Name="FlightVoyageNo" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Flight Or Voyage Number" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipStatusSAP" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Ov Transportation Status" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipStatusSAPDes" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Ov Transp Status desc" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselName" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Vessel Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ForwardingAgent" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Forwarding agent No." sap:creatable="false" sap:updatable="false"/>
+                <Property Name="AgentName" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Agent Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EreqNo" Type="Edm.String" Nullable="false" MaxLength="51" sap:unicode="false" sap:label="EREQ No." sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ForwarderRefNo" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Forwarder Reference No." sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipStatusSPS" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Ship Status SPS" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipStatusSPSDes" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Ship Status SPS Desc" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselStatus" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Vessel status" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="VesStatDes" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="VesStatDes" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LoadPortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Load Port Code" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="LoadPortName" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Load Port Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLoadPortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Trans Load Port Code" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="TransLoadPortName" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Trans Load Port Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DischargePortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Discharge Port Code" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="DischargePortName" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Discharge Port Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransloadInd" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Transload indicator" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="BookingNo" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Booking Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CurrentPort" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Current Port" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="CurrentPortName" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Current Port Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ShipWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unicode="false" sap:unit="WeightUnit" sap:label="Weight Per Shipment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WeightUnit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Weight Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="ShipContainerCnt" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Shipment Container Count" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="VesselWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unicode="false" sap:unit="VesselWeightUnit" sap:label="Vessel Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VesselWeightUnit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Vessel Weight Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="WeightUnitDes" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Weight Unit Desc" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CustomerNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Customer Number" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipToCountry" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Ship-To Country" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipToCountryName" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Ship-To Country Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ShipFromCountry" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Ship-From Country" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ShipFromCountryName" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Ship-From Country Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LoadPortDateP" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Load Port Date -P" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LoadPortDateA" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Load Port Date -A" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLoadPortDateP" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Trans Load Port Date -P" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLoadPortDateA" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Trans Load Port Date -A" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DiscPortDateP" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Disc Port Date -P" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DiscPortDateA" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Disc Port Date -A" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LegsVesselShipment" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Legs Vessel-Shipment" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="VesselInfoRec" Type="Edm.String" Nullable="false" MaxLength="13" sap:unicode="false" sap:label="Vessel info record" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Created By" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="CreatedOn" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Created On" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CreatedAt" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Created At" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ChangedBy" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Changed By" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ChangedOn" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Changed On" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ChangedAt" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Changed At" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NoHdrCount" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="No Hdr Count" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="F4_Port" sap:label="F4 Port" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PortCode"/>
+                    <PropertyRef Name="PortName"/>
+                    <PropertyRef Name="Country"/>
+                    <PropertyRef Name="InActive"/>
+                </Key>
+                <Property Name="PortCode" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Current Port" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="PortName" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Port Name" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Country" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Country" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InActive" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Inactive" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="F4_Vessel" sap:label="F4 Vessel" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="VesselCode"/>
+                    <PropertyRef Name="VesselName"/>
+                    <PropertyRef Name="Inactive"/>
+                </Key>
+                <Property Name="VesselCode" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Vessel Cd" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="VesselName" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Vessel Name" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Inactive" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Inactive" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="VesselHd" sap:label="Vessel Header" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Indicator"/>
+                </Key>
+                <Property Name="Indicator" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="VesselHdToVesselUpdate" Relationship="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHdToVesselUpdate" FromRole="FromRole_VesselHdToVesselUpdate" ToRole="ToRole_VesselHdToVesselUpdate"/>
+                <NavigationProperty Name="VesselHdToReturnMsg" Relationship="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHdToReturnMsg" FromRole="FromRole_VesselHdToReturnMsg" ToRole="ToRole_VesselHdToReturnMsg"/>
+            </EntityType>
+            <EntityType Name="F4_Shipment_Status" sap:label="F4 Shipment Status" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ship_Status_Value"/>
+                    <PropertyRef Name="Ship_Status_Desc"/>
+                </Key>
+                <Property Name="Ship_Status_Value" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Lower_value" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Ship_Status_Desc" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Descript." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="F4_SPS_Shipment_Status" sap:label="F4 Shipment Status SPS" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Value"/>
+                </Key>
+                <Property Name="Value" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Lower_value" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Descript." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="F4_Vessel_Status" sap:label="Vessel Status" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Value"/>
+                    <PropertyRef Name="Description"/>
+                </Key>
+                <Property Name="Value" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Lower_value" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Descript." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="F4_Weight_Unit" sap:label="Weight Unit" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="WeightUnit"/>
+                </Key>
+                <Property Name="WeightUnit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Commercial" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="UnitText" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Unit text" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <Association Name="VesselHdToVesselUpdate" sap:content-version="1" sap:label="VesselHdToVesselUpdate">
+                <End Type="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHd" Multiplicity="1" Role="FromRole_VesselHdToVesselUpdate"/>
+                <End Type="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselUpdate" Multiplicity="*" Role="ToRole_VesselHdToVesselUpdate"/>
+            </Association>
+            <Association Name="VesselHdToReturnMsg" sap:content-version="1" sap:label="VesselHdToReturnMsg">
+                <End Type="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHd" Multiplicity="1" Role="FromRole_VesselHdToReturnMsg"/>
+                <End Type="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.ReturnMsg" Multiplicity="*" Role="ToRole_VesselHdToReturnMsg"/>
+            </Association>
+            <EntityContainer Name="ZSUP_VESSEL_TRACKER_DASHBRD_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="F4_ShipmentSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Shipment" sap:label="F4 Shipment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_CountrySet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Country" sap:label="F4 Country" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_FwdAgentSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_FwdAgent" sap:label="F4 FwdAgent" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="VesselUpdateSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselUpdate" sap:label="Vessel Update" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ReturnMsgSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.ReturnMsg" sap:label="Return Message" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="VesselDetailSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselDetail" sap:label="Vessel Detail" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_PortSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Port" sap:label="F4 Port" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_VesselSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Vessel" sap:label="F4 Vessel" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="VesselHdSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHd" sap:label="Vessel Header" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_Shipment_StatusSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Shipment_Status" sap:label="F4 Shipment Status" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_SPS_Shipment_StatusSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_SPS_Shipment_Status" sap:label="F4 Shipment Status SPS" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_Vessel_StatusSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Vessel_Status" sap:label="F4 Vessel Status" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="F4_Weight_UnitSet" EntityType="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.F4_Weight_Unit" sap:label="Weight Unit" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <AssociationSet Name="VesselHdToVesselUpdateSet" Association="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHdToVesselUpdate" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="VesselHdSet" Role="FromRole_VesselHdToVesselUpdate"/>
+                    <End EntitySet="VesselUpdateSet" Role="ToRole_VesselHdToVesselUpdate"/>
+                </AssociationSet>
+                <AssociationSet Name="VesselHdToReturnMsgSet" Association="ZSUP_VESSEL_TRACKER_DASHBRD_SRV.VesselHdToReturnMsg" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="VesselHdSet" Role="FromRole_VesselHdToReturnMsg"/>
+                    <End EntitySet="ReturnMsgSet" Role="ToRole_VesselHdToReturnMsg"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="https://devfgw1.dir.slb.com:443/sap/opu/odata/sap/ZSUP_VESSEL_TRACKER_DASHBRD_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://devfgw1.dir.slb.com:443/sap/opu/odata/sap/ZSUP_VESSEL_TRACKER_DASHBRD_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

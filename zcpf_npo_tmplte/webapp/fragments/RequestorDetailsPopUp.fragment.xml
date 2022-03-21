@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:table="sap.ui.table">
+	<Dialog  title="{i18n>RequesterDetails}" contentWidth="70%">
+		<content>
+			<!-- Requester Details Table -->
+			<table:Table id="tblRequesterDetails" visibleRowCount="1" class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom" 
+							rows="{RequesterDetailModel>/}" noData="{i18n>NoData}" busy="">
+					<table:columns>
+						<!-- Requester LDAP Alias -->
+						<table:Column width="10em" vAlign="Top" tooltip="{i18n>ToolTip.RequesterLDAPAlias}">
+							<Label text="{i18n>ReqDetTblColRequesterLDAPAlias}" />
+							<table:template>
+								<Text text="{RequesterDetailModel>UsrAlias}"/>
+							</table:template>
+						</table:Column>
+						<!-- Requester Full Name -->
+						<table:Column width="10em" vAlign="Top" tooltip="{i18n>ToolTip.RequesterFullName}">
+							<Label text="{i18n>ReqDetTblColRequesterFullName}" />
+							<table:template>
+								<Text text="{RequesterDetailModel>UsrName}"/>
+							</table:template>
+						</table:Column>
+						<!-- Requester GIN Number -->
+						<table:Column width="10em" vAlign="Top" tooltip="{i18n>ToolTip.RequesterGIN}">
+							<Label text="{i18n>ReqDetTblColRequesterGIN}" />
+							<table:template>
+								<Text text="{RequesterDetailModel>GIN}"/>
+							</table:template>
+						</table:Column>
+						<!-- Requester Email -->
+						<table:Column width="10em" vAlign="Top" tooltip="{i18n>ToolTip.RequesterEmail}">
+							<Label text="{i18n>ReqDetTblColRequesterEmail}" />
+							<table:template>
+								<Text text="{RequesterDetailModel>UsrEmail}"/>
+							</table:template>
+						</table:Column>
+					</table:columns>
+				</table:Table>
+			</content>
+			<beginButton>
+				<!-- Submit Action -->
+				<Button text="{i18n>Submit}" press="onPressRequesterDetailsPopUpSubmit"/>
+			</beginButton>
+			<endButton>
+				<!-- Dialog Close -->
+				<Button text="{i18n>Close}" press="onPressRequesterDetailsPopUpClose"/>
+			</endButton> 
+	</Dialog>
+</core:FragmentDefinition>

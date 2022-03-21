@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>FragSelectWbs}" class="sapUiPopupWithPadding"
+					search="handleValueHelpSearch" confirm="handleValueHelpClose" cancel="handleValueHelpClose"
+					items="{path: 'wbsF4Model>/',
+								sorter: {
+									path: 'Title',
+									descending: false
+									}}">
+		<StandardListItem title="{wbsF4Model>Title}" description="{wbsF4Model>Desc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

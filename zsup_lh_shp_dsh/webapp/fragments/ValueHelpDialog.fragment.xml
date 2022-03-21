@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		class="sapUiPopupWithPadding"
+		items="{path: 'valueHelpModel>/',
+					sorter: {
+						path: 'Title',
+						descending: false
+						}}"
+		search="handleValueHelpSearch_ST"
+		confirm="handleValueHelpClose_ST"
+		cancel="handleValueHelpClose_ST"
+		 
+	 
+		>
+		<StandardListItem
+			title="{valueHelpModel>Title}" description="{valueHelpModel>Desc}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

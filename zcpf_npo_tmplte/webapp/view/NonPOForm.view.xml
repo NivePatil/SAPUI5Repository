@@ -1,0 +1,541 @@
+<mvc:View
+    controllerName="com.slb.cpf.online.nonpo.zcpfnpotmplte.controller.NonPOForm"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:table="sap.ui.table" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" 
+    displayBlock="true" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+    xmlns="sap.m"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>FULLSCREEN_TITLE}" enableScrolling="true" showNavButton="true" navButtonPress="onBackNav" showFooter="true">
+		<content>
+			<!-- General Services Work Order -->
+			<Panel id="pnlGenSrvWO" headerText="{i18n>GenSrvWO}" expandable="true" expanded="true" tooltip="{ToolTip.GenSrvWO}">
+				<l:VerticalLayout width="100%">
+					<l:content>
+					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" selectionChange="onSelectionChangePartnerType" >
+							<f:content>
+								<!-- Company Code -->
+								<Label text="{i18n>CompanyCode}" required="true">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpCompanyCode" showValueHelp="true" valueHelpOnly="true" maxLength="4" change="onChangeCompCode"
+									 valueHelpRequest="handleCompanyCodeF4Open" liveChange="onliveChangeCompCode" valueLiveUpdate="true" 
+									 app:selectionType="{i18n>selectionType.singleSelect}">
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<!-- Requester LDAP Alias -->
+								<Label text="{i18n>RequestorLDAPAlias}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpRequesterAlias" enabled="false" >
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<!-- Company Name -->
+								<Label text="{i18n>CompanyName}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpCompanyName" enabled="false">
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<!-- Requester Full Name -->
+								<Label text="{i18n>RequestorFullName}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpRequesterFullName" enabled="false">
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<Text text=" ">
+									<layoutData><l:GridData span="XL6 L6 M4 S7" /></layoutData>
+								</Text>
+								<!-- Requester GIN Number -->
+								<Label text="{i18n>RequestorGIN}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<HBox>
+									<Input id="inpRequesterGIN" enabled="false" width="16.5em" />									
+									<Button icon="sap-icon://edit" type="Emphasized" press="onPressEditBtn" />
+										<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</HBox>
+								<!-- Vendor Code -->
+								<Label text="{i18n>VendorCode}" required="true">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpVendorCode" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="handleVendorCodeF4Open" 
+										enabled="false" app:selectionType="{i18n>selectionType.singleSelect}">
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<!-- Requester Email -->
+								<Label text="{i18n>RequestorEmail}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpRequesterEmail" enabled="false" >
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<!-- Vendor Name -->
+								<Label text="{i18n>VendorName}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpVendorName" enabled="false" >
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								<Text text=" ">
+									<layoutData><l:GridData span="XL6 L6 M12 S7" /></layoutData>
+								</Text>
+								<Text text=" ">
+									<layoutData><l:GridData span="XL6 L6 M12 S7" /></layoutData>
+								</Text>
+								<Text text=" ">
+									<layoutData><l:GridData span="XL6 L6 M12 S7" /></layoutData>
+								</Text>
+								
+								<!-- Changes for RFC# 7000018441 CD# 2000039133 - Removed Approver Details -->
+								
+								<!-- Permitted Payee Code -->
+								<Label text="{i18n>PermittedPayeeCode}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpPermittedPayeeCode" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="handlePermittedPayeeCodeF4Open" enabled="false">
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								
+								<!-- Template Completed Date -->
+								<Label text="{i18n>DateTemplateCompleted}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Text id="dtDateTemplateCompleted" >								
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Text>
+								
+								<!-- Changes for RFC# 7000018441 CD# 2000039133 - Removed Approver Details -->
+									
+								<!-- Permitted Payee Name -->
+								<Label text="{i18n>PermittedPayeeName}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<Input id="inpPermittedPayeeName" enabled="false" >
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</Input>
+								
+								<!-- Template Completed By -->
+								<Label text="{i18n>TemplateCompletedBy}">
+									<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+								</Label>
+								<VBox>
+									<Input id="inpDefaultUserFullName" enabled="false">	
+									</Input>
+									<Input id="inpDefaultUserEmailId" enabled="false">
+									</Input>
+									<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+								</VBox>
+								
+								<!-- Changes for RFC# 7000018441 CD# 2000039133 - Removed Approver Details -->
+								
+							</f:content>
+						</f:SimpleForm>
+						<f:SimpleForm minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" 
+										labelSpanM="3" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="1" class="editableForm">
+							<f:content>
+								<!-- Line Items Table -->
+								<table:Table id="tblAccountCode" threshold="40" width="95%" visibleRowCount="10" visibleRowCountMode="Fixed"
+												class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom" selectionMode="MultiToggle" 
+												noData="{i18n>NoData}" busy="" rows="{AccountingModel>/}">
+									<table:footer>
+										<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+											<items>
+												<!-- Invoice Net Amount -->
+												<Label text="{i18n>NonPOTblLineItemsTotalSumTitle}" class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+												<Input id="inpInvNetAmt" width="50%" editable="true" enabled="false" />
+												<HBox>
+													<Text text="" visible="false" class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+													<Input id="rowCountPickUp" width="50%" editable="true" visible="false" />
+												</HBox>
+											</items>
+										</FlexBox>
+									</table:footer>
+									<table:toolbar>
+										<OverflowToolbar>
+											<!-- Add New Item to table -->
+											<Button text="{i18n>AddItem}" type="Emphasized" class="sapUiTinyMarginEnd" 
+													toolTip="{i18n>ToolTip.AddItem}" press="onPressAddItem" />
+											<!-- Delete selected item/items from table -->
+											<Button text="{i18n>DeleteItem}" type="Emphasized" class="sapUiTinyMarginEnd" 
+													toolTip="{i18n>ToolTip.DeleteItem}" press="onPressDeleteItem" />
+											<!-- Start of changes for RFC# 7000018441 CD# 2000039133 - Adding Copy Item button -->
+											<!-- Copy selected item/items from table -->
+											<Button text="{i18n>CopyItem}" type="Emphasized" class="sapUiTinyMarginEnd" 
+													toolTip="{i18n>ToolTip.CopyItem}" press="onPressCopyItem" />
+											<!-- End of changes for RFC# 7000018441 CD# 2000039133 - Adding Copy Item button -->
+										</OverflowToolbar>
+									</table:toolbar>
+									<table:columns>
+										<!-- Item Description -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.Description}">
+											<Label text="{i18n>NonPOTblColDescription}" />
+											<table:template>
+												<Input value="{AccountingModel>ItemDesc}" editable="{AccountingModel>editable}" />
+											</table:template>
+										</table:Column>
+										<!-- Commodity Description -->
+										<table:Column width="8em" vAlign="Top" tooltip="{i18n>ToolTip.ComDescription}">
+											<Label text="{i18n>NonPOTblColComDescription}" />
+											<table:template>
+												<Input value="{AccountingModel>CommodityDesc}" editable="{AccountingModel>editable}" 
+														showValueHelp="true" valueHelpRequest="openCommDescPopup" liveChange="handleCommodityDescChange" />		
+											</table:template>
+										</table:Column>
+										<!-- Type of Transaction -->
+										<table:Column width="8em" vAlign="Top" tooltip="{i18n>ToolTip.TypeOfTrnxn}">
+											<Label text="{i18n>NonPOTblColTypeOfTrnxn}" />
+											<table:template>
+												<Input value="{AccountingModel>TICDesc}" editable="{AccountingModel>editable}" showValueHelp="true"							
+														valueHelpRequest="openTypeOfTraxnPopup" liveChange="handleTypeOfTransChange" />	
+											</table:template>
+										</table:Column>
+										<!-- Quantity -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.Qty}">
+											<Label text="{i18n>NonPOTblColQty}" />
+											<table:template>
+												<Input value="{AccountingModel>Quantity}" editable="{AccountingModel>editable}"
+												       type="Number" app:colName="{i18n>NonPOTblColQty}" 
+												       change="calculateTotalPrice" />		
+											</table:template>
+										</table:Column>
+										<!-- Start of changes for RFC# 7000008934 CD# 2000031315 - Adding new column UOM -->
+										<!-- UOM -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.UOM}">
+											<Label text="{i18n>NonPOTblColUOM}" />
+											<table:template>
+												<Input value="{AccountingModel>UOM}" editable="{AccountingModel>editable}" showValueHelp="true"							
+														valueHelpRequest="openUOMPopup" liveChange="handleUOMChange" />		
+											</table:template>
+										</table:Column>
+										<!-- End of changes for RFC# 7000008934 CD# 2000031315 - Adding new column UOM -->
+										<!-- Unit Price -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.UnitPrice}">
+											<Label text="{i18n>NonPOTblColUnitPrice}" />
+											<table:template>
+												<Input value="{AccountingModel>UnitPrice}" editable="{AccountingModel>editable}"
+												   		type="Number" app:colName="{i18n>NonPOTblColUnitPrice}" change="calculateTotalPrice" />
+											</table:template>
+										</table:Column>
+										<!-- Total Price -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.Total}">
+											<Label text="{i18n>NonPOTblColTotal}" />
+											<table:template>
+												<Input value="{AccountingModel>ItemNetAmount}" editable="false" type="Number" 
+														app:colName="{i18n>NonPOTblColTotal}" />
+											</table:template>
+										</table:Column>
+										<!-- GL Account -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.GlAcc}">
+											<Label text="{i18n>NonPOTblColGlAcc}" />
+											<table:template>
+												<!-- Start of changes for RFC# 7000015093 CD# 2000033080 Phase 2 : Changed GL Account field from Input to Text -->
+												<Text text="{AccountingModel>GLAccount}" />	
+												<!-- End of changes for RFC# 7000015093 CD# 2000033080 Phase 2 : Changed GL Account field from Input to Text -->	
+											</table:template>
+										</table:Column>
+										<!-- Cost Center -->
+										<table:Column width="7em" vAlign="Top" tooltip="{i18n>ToolTip.CostCenter}">
+											<Label text="{i18n>NonPOTblColCostCenter}" />
+											<table:template>
+												<Input value="{AccountingModel>CostCenter}" editable="{AccountingModel>editable}"  showValueHelp="true"							
+														valueHelpRequest="openCostCenterPopup" liveChange="handleCostCenterChange" enabled="{AccountingModel>CostCenterEnable}" />	
+											</table:template>
+										</table:Column>
+										<!-- Profit Center -->
+										<table:Column width="7em" vAlign="Top" tooltip="{i18n>ToolTip.ProfitCenter}">
+											<Label text="{i18n>NonPOTblColProfitCenter}" />
+											<table:template>
+												<Input value="{AccountingModel>ProfitCenter}" editable="false"/>
+											</table:template>
+										</table:Column>
+										<!-- WBS -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.Wbs}">
+											<Label text="{i18n>NonPOTblColWbs}" />
+											<table:template>
+												<Input value="{AccountingModel>WBS}" editable="{AccountingModel>editable}"  showValueHelp="true"							
+													   valueHelpRequest="openWbsPopup" liveChange="handleWBSChange" enabled="{AccountingModel>WBSEnable}" />
+											</table:template>
+										</table:Column>
+										<!-- TIC Code -->
+										<table:Column width="6em" vAlign="Top" tooltip="{i18n>ToolTip.TicCode}">
+											<Label text="{i18n>NonPOTblColTicCode}" />
+											<table:template>
+												<Input value="{AccountingModel>TIC}" editable="{AccountingModel>editable}"  showValueHelp="true"							
+														valueHelpRequest="openTicCodePopup" />
+											</table:template>
+										</table:Column>
+									</table:columns>
+								</table:Table>
+							</f:content>
+						</f:SimpleForm>
+					</l:content>
+				</l:VerticalLayout>
+			</Panel>
+			<!-- Important Instructions to Supplier/Vendor -->
+			<Panel id="pnlImpInstSupVen" headerText="{i18n>ImpInstSupVen}" expandable="true" expanded="false" tooltip="{ToolTip.ImpInstSupVen}">
+				<f:SimpleForm editable="true" layout="ResponsiveGridLayout" class="editableForm">
+					<f:content>
+						<Text text="" >
+							<layoutData><l:GridData span="XL6 L6 M2 S5" /></layoutData>
+						</Text>
+						<!-- Bill Invoice To -->
+						<Label text="{i18n>BillInvTo}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<TextArea id="txtAreaBillInvoiceTo" enabled="false"  height="7em" >
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</TextArea>
+						<!-- Invoice Number -->
+						<Label text="{i18n>InvoiceNum}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpInvoiceNum">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Other general instructions 1 -->
+						<Label text="{i18n>OthrGenIns}"  >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpOthrGenIns1">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Invoice Date -->
+						<Label text="{i18n>InvoiceDate}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<DatePicker id="dtInvoiceDate" displayFormat="dd-MMM-yyyy" change="handleChangeInvoiceDate">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</DatePicker>
+						<!-- Other general instructions 2 -->
+						<Text text="">
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Text>
+						<Input id="inpOthrGenIns2">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Invoice Net Amount -->
+						<Label text="{i18n>InvoiceNetAmt}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpInvoiceNetAmt" change="handleInvoiceNetAmountChange">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Other general instructions 3 -->
+						<Text text="">
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Text>
+						<Input id="inpOthrGenIns3">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Tax Amount -->
+						<Label text="{i18n>TaxAmt}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpTaxAmt" change="handleTaxAmountChange">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Other general instructions 4 -->
+						<Text text="">
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Text>
+						<Input id="inpOthrGenIns4">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Invoice Gross Amount -->
+						<Label text="{i18n>InvGrossAmt}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpInvoiceGrossAmt" enabled="false">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Recipient of the Template 1 -->
+						<Label text="{i18n>RecpOfTmplt}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpRecpOfTmpltEmail1" enabled="false">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>		
+						<!-- Invoice Currency -->
+						<Label text="{i18n>InvCurr}" >
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Input id="inpInvoiceCurr" showValueHelp="true" valueHelpOnly="true"  valueHelpRequest="handleInvoiceCurrF4Open" >
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<!-- Recipient of the Template 2 -->
+						<Text text="">
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Text>
+						<Input id="inpRecpOfTmpltEmail2" enabled="false">
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Input>
+						<Text text="">
+							<layoutData><l:GridData span="XL12 L12 M12 S12" /></layoutData>
+						</Text>
+						<!-- Start of changes for RFC# 7000008934 CD# 2000031315 - Adding new display only Billing instructions instead of input fields -->
+						<!-- Changes for RFC# 7000018441 CD# 2000039133 - Removed all specific billing instructions fields except Payment Contact -->
+						<!-- Specific Billing Instructions 4 : Contact name-->
+						<!-- Start of changes for RFC# 7000018441 CD# 2000039133 - Changing Payment Contact from display only to dropdown selection -->
+						<Label text="{i18n>PaymentContact}">
+							<layoutData><l:GridData span="XL3 L3 M2 S5" /></layoutData>
+						</Label>
+						<Select id="inpPaymentContact" selectedKey="{FinanceHelpDeskModel>/SelectedHelpdesk}"  
+								change="handleFinanceHelpdeskChange" forceSelection="false" 
+								items="{
+									path: 'FinanceHelpDeskModel>/FinanceHelpdeskCollection',
+									sorter: { path: 'text' }
+								}">
+							<core:Item key="{FinanceHelpDeskModel>key}" text="{FinanceHelpDeskModel>text}" />
+							<layoutData><l:GridData span="XL3 L3 M4 S7" /></layoutData>
+						</Select>	
+						<Text text="">
+							<layoutData><l:GridData span="XL6 L6 M6 S12" /></layoutData>
+						</Text>
+						<!-- End of changes for RFC# 7000018441 CD# 2000039133 - Changing Payment Contact from display only to dropdown selection -->
+						<!-- End of changes for RFC# 7000008934 CD# 2000031315 - Adding new display only Billing instructions instead of input fields -->
+					</f:content>
+				</f:SimpleForm>
+			</Panel>
+			<!-- Start of changes for RFC# 7000015093 CD# 2000033080 - Adding tab to display history -->
+			<!-- History -->
+			<Panel id="pnlHistory" headerText="{i18n>panelHistory}" expandable="true" expanded="false" tooltip="{i18n>ToolTip.panelHistory}">
+				<content>
+					<!-- Selection Filter Criteria -->
+					<f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+						<f:content>
+							<!-- Company Code Multi-Input -->
+							<Label text="{i18n>history.compCodeMultiInput}" required="true">
+								<layoutData><l:GridData span="XL4 L3 M3 S5" /></layoutData>
+							</Label>
+							<MultiInput id="multiInput_CompanyCode" showValueHelp="true" valueHelpOnly="true" width="40%" 
+										valueHelpRequest="handleCompanyCodeF4Open" app:selectionType="{i18n>selectionType.multiSelect}">
+								<layoutData><l:GridData span="XL8 L9 M9 S7" /></layoutData>
+							</MultiInput>
+							<!-- Vendor Code Multi-Input -->
+							<Label text="{i18n>history.vendorCodeMultiInput}">
+								<layoutData><l:GridData span="XL4 L3 M3 S5" /></layoutData>
+							</Label>
+							<MultiInput id="multiInput_VendorCode" showValueHelp="true" valueHelpOnly="true" enabled="false" width="40%" 
+										valueHelpRequest="handleVendorCodeF4Open" app:selectionType="{i18n>selectionType.multiSelect}">
+								<layoutData><l:GridData span="XL8 L9 M9 S7" /></layoutData>
+							</MultiInput>
+							<!-- Requestor Multi-Input -->
+							<Label text="{i18n>history.requestorMultiInput}">
+								<layoutData><l:GridData span="XL4 L3 M3 S5" /></layoutData>
+							</Label>
+							<MultiInput id="multiInput_Requester" showValueHelp="true" valueHelpOnly="true" width="40%" 
+										valueHelpRequest="handleRequestorMultiF4Open" app:selectionType="{i18n>selectionType.multiSelect}">
+								<layoutData><l:GridData span="XL8 L9 M9 S7" /></layoutData>
+							</MultiInput>	
+							<!-- From Date -->
+							<Label text="{i18n>history.fromDate}" required="true">
+								<layoutData><l:GridData span="XL4 L3 M3 S5" /></layoutData>
+							</Label>
+							<DatePicker id="historyFromDateFilter" change="handleTmpltCrtFromDateChange" width="20%" 
+										displayFormat="dd-MMM-yyyy">
+								<layoutData><l:GridData span="XL8 L9 M9 S7" /></layoutData>
+							</DatePicker>
+							<!-- To Dates -->
+							<Label text="{i18n>history.toDate}" required="true">
+								<layoutData><l:GridData span="XL4 L3 M3 S5" /></layoutData>
+							</Label>
+							<DatePicker id="historyToDateFilter" displayFormat="dd-MMM-yyyy" change="handleTmpltCrtToDateChange" 
+										width="20%">
+				            	<layoutData><l:GridData span="XL8 L9 M9 S7" /></layoutData>
+				            </DatePicker>
+				            <!-- Get History button -->
+							<FlexBox alignItems="Start" justifyContent="End">
+								<items>
+									<Button text="{i18n>history.btnGetHistory}" type="Emphasized" class="sapUiSmallMarginEnd" 
+											press="handleOnClickGetHistory" />
+								</items>
+								<layoutData><l:GridData span="XL12 L12 M12 S12" /></layoutData>
+							</FlexBox>
+						</f:content>
+					</f:SimpleForm>
+					<!-- Table displaying reports history records -->
+					<Table id="templateReportsHistory" growing="true" growingThreshold="10" class="tableBorder sapUiMediumMarginTop" 
+							items="{path: 'templateReportsHistoryModel>/templateReports', templateShareable: false}">
+						<columns>
+							<!-- Column Label URN -->
+							<Column width="11%">
+								<Label text="{i18n>history.urn}" tooltip="{i18n>history.TooltipURN}" />
+							</Column>
+							<!-- Column Label Company Code -->
+							<Column width="11%">
+								<Label text="{i18n>history.compCode}" tooltip="{i18n>history.compCode}" />
+							</Column>
+							<!-- Column Label Vendor Code -->
+							<Column width="11%">
+								<Label text="{i18n>history.vendorCode}" tooltip="{i18n>history.vendorCode}" />
+							</Column>
+							<!-- Column Label Vendor Name -->
+							<Column width="17%">
+								<Label text="{i18n>history.vendorName}" tooltip="{i18n>history.vendorName}" />
+							</Column>
+							<!-- Column Label Requester ID -->
+							<Column width="11%">
+								<Label text="{i18n>history.requesterID}" tooltip="{i18n>history.requesterID}" />
+							</Column>
+							<!-- Column Label Requester Name -->
+							<Column width="17%">
+								<Label text="{i18n>history.requesterName}" tooltip="{i18n>history.requesterName}" />
+							</Column>
+							<!-- Column Label Creation Date -->
+							<Column width="11%">
+								<Label text="{i18n>history.creationDt}" tooltip="{i18n>history.creationDt}" />
+							</Column>
+							<!-- Column Label Creation Time -->
+							<Column width="11%">
+								<Label text="{i18n>history.creationTime}" tooltip="{i18n>history.creationTime}" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<!-- Column Value URN -->
+								<Link text="{templateReportsHistoryModel>URN}" press="handleOnClickURN" />
+								<!-- Column Value Company Code -->
+					            <Text text="{templateReportsHistoryModel>CompanyCode}" />
+					            <!-- Column Value Vendor Code -->
+					            <Text text="{templateReportsHistoryModel>Vendor}" />
+					            <!-- Column Value Vendor Name -->
+					            <Text text="{templateReportsHistoryModel>VendorDesc}" />
+					            <!-- Column Value Requester ID -->
+					            <Text text="{templateReportsHistoryModel>ReqGin}" />
+					            <!-- Column Value Requester Name -->
+					            <Text text="{templateReportsHistoryModel>ReqName}" />
+					            <!-- Column Value Creation Date -->
+					            <Text text="{path:'templateReportsHistoryModel>TemplateDateFrom',
+										    formatter: '.formatter.formatDateOutput'}" />
+					            <!-- Column Value Creation Time -->
+					            <Text text="{templateReportsHistoryModel>TemplateTime}" />
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Panel>
+			<!-- End of changes for RFC# 7000015093 CD# 2000033080 - Adding tab to display history -->
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer />
+				<!-- Start of changes for RFC# 7000015093 CD# 2000033080 - Adding Clear button to clear all the input fields -->
+				<!-- Clear -->
+				<Button type="Emphasized" text="{i18n>clear}" press="onClear" />
+				<!-- End of changes for RFC# 7000015093 CD# 2000033080 - Adding Clear button to clear all the input fields -->
+				<!-- Save and Complete -->
+				<Button type="Accept" text="{i18n>saveAndComplete}" press="onPressSaveAndComplete">
+					<layoutData>
+						<OverflowToolbarLayoutData moveToOverflow="false" />
+					</layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>FragSelectProfitCenter}" class="sapUiPopupWithPadding" 
+					search="handleValueHelpSearch" confirm="handleValueHelpClose" cancel="handleValueHelpClose"
+					items="{path: 'profitCenterF4Model>/',
+								sorter: {
+									path: 'Title',
+									descending: false
+									}}">
+		<StandardListItem title="{profitCenterF4Model>Title}" description="{profitCenterF4Model>Desc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

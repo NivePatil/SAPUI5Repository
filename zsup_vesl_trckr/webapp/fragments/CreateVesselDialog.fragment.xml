@@ -1,0 +1,279 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core">
+	<Dialog title = "{i18n>CreateVesselPopUpTitle}" id="CreateVesselDialog" class="sapUiSizeCompact" contentWidth="100%"
+		contentHeight="80%" resizable="true" validateFieldGroup="onValidateCreateScreenMandatory"
+		afterClose="onAfterCreateScreenClose" >
+
+	<form:Form  editable="true">
+			<form:layout>
+				<form:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="1"
+					emptySpanL="1"
+					emptySpanM="1"
+					emptySpanS="0"
+					columnsXL="3"
+					columnsL="2"
+					columnsM="2"
+					singleContainerFullSize="false" />
+			</form:layout>
+			<form:formContainers>
+				<form:FormContainer>
+					<form:formElements>
+					<!-- Freight Forwarder -->
+						<form:FormElement>
+							<form:label>
+									<Label text="{i18n>CreateVessel.FreightForwarder}" required="true"  />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnFreightForwarder" value="{selectionScreenModel>freightFwder}" showValueHelp="true" fieldGroupIds="createMandate" required="true" 
+									valueHelpOnly="true" valueHelpRequest="handleCrtVslFreightForwarderF4Open" tokenUpdate="onCrtVslScrnFrghtFrwdTokenChange" />
+							</form:fields>
+						</form:FormElement>
+						<!-- Vessel No. -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.VesselNo}" required="true" />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnVesselNo" showValueHelp="true" fieldGroupIds="createMandate" required="true" 
+									valueHelpOnly="true" valueHelpRequest="handleCrtVslVesselF4Open" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<!-- Flight or Voyage No. -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.FlightOrVoyageNumber}" required="true" />
+							</form:label>
+							<form:fields>
+								<Input id="id_CrtScrnFlightVoyageNo" change="handleCrtVslFlightVoyageChange" fieldGroupIds="createMandate" required="true" />
+							</form:fields>
+						</form:FormElement>
+						<!-- Vessel Status -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.VesselStatus}" required="true" />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnVesselStatus" showValueHelp="true"
+									valueHelpOnly="true" fieldGroupIds="createMandate" required="true" valueHelpRequest="handleCrtVslVesselStatusF4Open" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<!-- Current Port -->
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>CreateVessel.CurrentPort}"/>
+							</form:label>
+							 <MultiInput id="id_CrtScrnCurrentPort" showValueHelp="true" 
+								valueHelpOnly="true" valueHelpRequest="handleCrtVslCurrentPortF4Open">
+							</MultiInput>
+						</form:FormElement>
+						<!-- Load Port -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.LoadPort}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnLoadPort" showValueHelp="true"
+									valueHelpOnly="true" valueHelpRequest="handleCrtVslLoadPortF4Open" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<!-- Trans Load Indicator -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.TransLoadIndicator}" />
+							</form:label>
+							<form:fields>
+								<CheckBox  id= "id_CrtScrnTransLoadInd" select="onCrtScrnTransLoadIndChange" />
+							</form:fields>
+						</form:FormElement>
+						<!-- Trans Load Port -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.TransLoadPort}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnTransLoadPort" showValueHelp="true" 
+									valueHelpOnly="true" valueHelpRequest="handleCrtVslTransLoadPortF4Open" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<!-- Discharge Port -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.DischargePort}"/>
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnDischargePort" showValueHelp="true"
+									valueHelpOnly="true" valueHelpRequest="handleCrtVslDischargePortF4Open" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+
+					</form:formElements>
+				</form:FormContainer>
+				<form:FormContainer>
+					<form:formElements>
+						<!-- Forwarder Reference No. -->
+						<form:FormElement >
+							<form:label>
+								<Label text="{i18n>CreateVessel.ForwarderRefNo}"/>
+							</form:label>
+							<form:fields>
+								<Input id="id_CrtScrnForwarderRefNo" >
+								</Input>
+							</form:fields>
+						</form:FormElement>
+						<!-- Booking No. -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.BookingNo}" />
+							</form:label>
+							<form:fields>
+								<Input id="id_CrtScrnBookingNo" >
+								</Input>
+							</form:fields>
+						</form:FormElement>
+						<!-- Vessel Weight -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.VesselWeight}"/>
+							</form:label>
+							<form:fields>
+								<Input id="id_CrtScrnVesselWeight" />
+								<MultiInput id="id_CrtScrnVesselWeightUnit" showValueHelp="true"
+									valueHelpOnly="true" valueHelpRequest="handleCrtVsl_VesselWeightUOMF4Open"  >
+									<layoutData>
+										<l:GridData span="XL4 L4 M4 S4" />
+									</layoutData>
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+						<!-- Container Count -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.CountOfContainer}" />
+							</form:label>
+							<form:fields>
+								<Input id="id_CrtScrnCountOfContnr" >
+								</Input>
+							</form:fields>
+						</form:FormElement>
+						<!-- Planned Load Date -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.PLDLoadDate}"  />
+							</form:label>
+							<form:fields>
+								<DatePicker  id="id_CrtScrenPLDLoadDate" 
+								value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+									UTC: true,
+							        pattern: 'dd-MMM-yyyy'
+									}}"
+								/>
+							</form:fields>
+						</form:FormElement>
+						<!-- Shipment No. -->
+						<form:FormElement id="id_CrtScrnGLobalSPSSHStatusForm" visible="false">
+							<form:label>
+								<Label text="{i18n>CreateVessel.SPSSHStatus}" />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnGLobalSPSSHStatus"  showValueHelp="true"
+								 valueHelpOnly="true" valueHelpRequest="handleCrtVslSPSSHStatusF4Open" tokenUpdate="onCrtVslSPSShipStatusTokenChange" />
+							</form:fields>
+						</form:FormElement>
+						<!-- Planned Discharge Date -->
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.PLDDischargeDate}"  />
+							</form:label>
+							<form:fields>
+								<DatePicker  id="id_CrtScrenPLDDelivDate" 
+								value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+									UTC: true,
+							        pattern: 'dd-MMM-yyyy'
+									}}"
+								/>
+							</form:fields>
+						</form:FormElement>
+					</form:formElements>
+				</form:FormContainer>
+				<form:FormContainer>
+					<form:formElements>
+						<form:FormElement >
+							<form:label>
+									<Label text="{i18n>CreateVessel.ShipmentNo}" required="true" />
+							</form:label>
+							<form:fields>
+								<MultiInput id="id_CrtScrnShipmentNo" showValueHelp="true" fieldGroupIds="createMandate" required="true"
+									valueHelpOnly="true" valueHelpRequest="handleCrtVslShipmentNoF4Open" tokenUpdate="onCrtVslScrnShipmentTokenChange" >
+								</MultiInput>
+							</form:fields>
+						</form:FormElement>
+					</form:formElements>
+				</form:FormContainer>
+				
+			</form:formContainers>
+
+		</form:Form>
+		<table:Table id="id_CrtScrnShipmentTbl"
+			rows="{shipmentTblModel>/shipmentData}"
+			class="sapUiResponsiveMargin" threshold="5" visibleRowCount="1"
+			selectionMode="None" noData="{i18n>noDataValueHelp}"
+			enableSelectAll="false">
+			<table:columns>
+				<table:Column width="auto">
+					<Label text="{i18n>CreateVessel.ShipmentNo}"
+						tooltip="{i18n>CreateVessel.ShipmentNo}" />
+					<table:template>
+						<Text text="{shipmentTblModel>ShipmentNo}" />
+					</table:template>
+				</table:Column>
+				<table:Column width="auto">
+					<Label text="{i18n>CreateVessel.EreqID}"
+						tooltip="{i18n>CreateVessel.EreqID}" />
+					<table:template>
+						<Input id="id_CrtScrnEreqId" value="{shipmentTblModel>EreqNo}" />
+					</table:template>
+				</table:Column>
+				<table:Column width="auto">
+					<Label text="{i18n>CreateVessel.BOL_AWB}" required="true"
+						tooltip="{i18n>CreateVessel.BOL_AWB}" />
+					<table:template>
+						<Input id="id_CrtScrnBOL_AWB" value="{shipmentTblModel>BolNo}" />
+					</table:template>
+				</table:Column>
+				<table:Column width="auto">
+					<Label text="{i18n>CreateVessel.SPSSHStatus}"
+						tooltip="{i18n>CreateVessel.SPSSHStatus}" />
+					<table:template>
+						<MultiInput showValueHelp="true" tokens="{ path: 'shipmentTblModel>ShipStatusSPS',  templateShareable:'true'}"
+				 					valueHelpOnly="true" valueHelpRequest="handleCrtVslSPSSHStatusF4Open" >
+									 <tokens>
+										 <Token key="{shipmentTblModel>title}" text="{shipmentTblModel>description}" />
+									 </tokens>
+						</MultiInput>
+					</table:template>
+				</table:Column>
+			</table:columns>
+		</table:Table>
+	 
+	<buttons>
+		<Button id="BtnCrtVslScreenCreate" text="{i18n>Create}" type="Accept"  press="handleCrtVslScreenCreate" />
+		<Button id="BtnCrtVslScreenClear" text="{i18n>Clear}" type="Emphasized"  press="handleCrtVslScreenClear" />
+		<Button id="BtnCrtVslScreenCancel" text="{i18n>Cancel}" type="Reject"  press="handleCrtVslScreenClose"   />
+		
+	</buttons>
+	</Dialog>
+</core:FragmentDefinition>

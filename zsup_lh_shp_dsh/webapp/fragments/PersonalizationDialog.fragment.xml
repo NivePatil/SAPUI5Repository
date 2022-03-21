@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <P13nDialog id ="id_PersDiag" showReset="true" showResetEnabled="{path: '/ShowResetEnabled'}" ok="handlePersonalizeShipmentContentOK" cancel="handlePersonalizeShipmentContentClose"
+                reset="handlePersonalizeShipmentContentReset" class="sapUiSizeCompact"
+                contentWidth="50px" showHeader="false">
+        <panels>
+            <P13nColumnsPanel visible="true" items="{path: 'SCTabColModel>/Items'}" type="columns">
+                <items>
+                    <P13nItem columnKey="{SCTabColModel>columnKey}" text="{SCTabColModel>text}" visible="true"/>
+                </items>
+            </P13nColumnsPanel>
+        </panels>
+    </P13nDialog>
+</core:FragmentDefinition>

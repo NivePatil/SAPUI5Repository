@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+<TableSelectDialog contentWidth="30%" contentHeight="70%" 
+		growingThreshold="500"
+		search="handleValueHelpSearch"
+		confirm="handleValueHelpClose"
+		cancel="handleValueHelpClose"
+		multiSelect="true"
+		items="{
+			path : 'SHFromCountryModel>/',
+			sorter : {
+				path : 'Title',
+				descending : false
+			}
+		}">
+		<ColumnListItem selected="{SHFromCountryModel>Selected}">
+			<cells>
+				<ObjectIdentifier
+					title="{SHFromCountryModel>Title}"
+					text ="{SHFromCountryModel>Desc}"/>
+					
+				</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="12em">
+				<header>
+					<Text text="All" />
+				</header>
+			</Column>
+		
+		</columns>
+	</TableSelectDialog>
+	</core:FragmentDefinition>

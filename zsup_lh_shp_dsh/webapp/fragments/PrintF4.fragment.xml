@@ -1,0 +1,34 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>PrintPopUp.Title}" contentWidth="30rem"
+		contentHeight="10rem" verticalScrolling="true"
+		class="sapUiSizeCompact">
+
+		<content>
+			<Label textAlign="Right" width="8rem"
+				class="sapUiSmallMarginBeginEnd"
+				text="{i18n>PrintPopUp.PrintOutputType}: " />
+			<Input width="14em" id="inp_PrintOutputType"
+				showValueHelp="true"
+				placeholder="{i18n>PrintPopUp.PrintOutputTypePlaceHolder}"
+				valueHelpOnly="true" valueHelpRequest="handlePrintOutputF4Open" />
+
+			<Label textAlign="Right" width="8rem"
+				class="sapUiSmallMarginBeginEnd"
+				text="{i18n>PrintPopUp.PrintOutputDevice}: " />
+			<Input id="id_InpDeviceType" width="14em" enabled="false"
+				editable="false" value="LOCL" />
+
+		</content>
+		<beginButton>
+			<Button text="{i18n>PrintPopUp.btnTextPrint}" type="Accept"
+				icon="sap-icon://print" press="onPrintPress" />
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>PrintPopUp.btnTextClose}" type="Reject"
+				press="handlePrintCloseButton" />
+		</endButton>
+
+	</Dialog>
+</core:FragmentDefinition> 
+ 

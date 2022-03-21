@@ -1,0 +1,465 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table" xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic" xmlns:l="sap.ui.layout"
+	xmlns:variant="sap.ui.comp.variants"
+	controllerName="com.slb.sup.vessel.tracker.zsupvesltrckr.controller.List">
+
+	<semantic:FullscreenPage title="{i18n>FULLSCREEN_TITLE}"
+							showNavButton="true" navButtonPress="onBackNav">
+		<semantic:content>
+			<l:VerticalLayout class="sapUiContentPadding" width="100%">
+				<l:content>
+					<!-- Counters -->
+					<VBox alignItems="Center">
+						<HBox alignContent="Center">
+						<!-- Total Vessel Count -->
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.VesselCount}" design="Bold" />
+								<NumericContent  value="{listViewModel>/cnt_vessel_total}" withMargin="false" 
+												icon="sap-icon://Fiori3/F0538"  tooltip="{i18n>Counters.VesselCount}" truncateValueTo="10" />
+							</VBox>
+							<!-- Pending Pickup Count -->
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.PendingPickup}" design="Bold" />
+								<NumericContent value="{listViewModel>/cnt_pickup}" valueColor="Error"
+												icon="sap-icon://approvals"  truncateValueTo="10" 
+												tooltip="{i18n>Counters.PendingPickup}"	withMargin="false" />
+							</VBox>
+							<!-- Depart Count -->
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.Depart}" design="Bold" />
+								<NumericContent value="{listViewModel>/cnt_vessel_depart}"
+												icon="sap-icon://permission" truncateValueTo="10" 
+												tooltip="{i18n>Counters.Depart}" withMargin="false" />
+							</VBox>
+							<!-- In Transit Count -->
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.InTransit}" design="Bold" />
+								<NumericContent value="{listViewModel>/cnt_vessel_transit}"
+												icon="sap-icon://request" valueColor="Good" truncateValueTo="10" 
+												tooltip="{i18n>Counters.InTransit}"	withMargin="false" />
+							</VBox>
+							<!-- Arrived Count -->
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.Arrived}" design="Bold" />
+								<NumericContent value="{listViewModel>/cnt_vessel_arrived}"
+												icon="sap-icon://approvals" valueColor="Good" truncateValueTo="10" 
+												tooltip="{i18n>Counters.Arrived}" withMargin="false" />
+							</VBox>
+						</HBox>
+					</VBox>
+				</l:content>
+			</l:VerticalLayout>
+			<ToolbarSpacer />
+			<table:Table id="TblVesselDetail" threshold="40" columnMove="onTblVesselDetailColumnMove"
+						class="sapUiMediumMarginBeginEnd" visibleRowCount="9" rowHeight="38"
+						busy="{listViewModel>/tableBusy}" noData="{i18n>NoData}" minAutoRowCount="5"
+						visibleRowCountMode="Auto">
+				<table:extension>
+					<OverflowToolbar>
+						<!-- Create Vessel -->
+						<Button id="BtnCreateVessel" text="{i18n>CreateVessel}" type="Emphasized" class="sapUiSmallMarginEnd"
+								tooltip="{i18n>CreateVessel}" press="onCreateVessel" />
+						<!-- Update Vessel -->
+						<Button id="BtnUpdateVessel" text="{i18n>UpdateVessel}" type="Emphasized" class="sapUiSmallMarginEnd" 
+								tooltip="{i18n>UpdateVessel}" press="onUpdateVessel"/>
+						<!-- Delete Vessel -->
+						<Button id="BtnDeleteVessel" text="{i18n>DeleteVessel}" type="Emphasized" class="sapUiSmallMarginEnd" 
+								tooltip="{i18n>DeleteVessel}" press="onDeleteVessel" />
+						<!-- Add Shipment -->
+						<Button id="BtnAddShipment" class="sapUiSmallMarginEnd" tooltip="{i18n>AddShipment}"
+								text="{i18n>AddShipment}" type="Emphasized"  width="12em" press="onAddShipment"/>
+						<!-- Complete Vessel -->
+						<Button id="BtnCompleteVessel" class="sapUiSmallMarginEnd" tooltip="{i18n>CompleteVessel}"
+								text="{i18n>CompleteVessel}" type="Emphasized"  width="12em" press="onCompleteVessel"/>
+						<variant:VariantManagement variantItems="{VesselTableVariantsModel>/VesselTableVariants}" select="onSelectVariantInTable" save="onSaveVariantAsInTable" 
+												manage="onManageVariantsInTable" showExecuteOnSelection="false" showShare="false" id="VesselVariantManagement">
+						<variant:variantItems>
+							<variant:VariantItem text="{VesselTableVariantsModel>Name}" key="{VesselTableVariantsModel>Key}"/>
+						</variant:variantItems>
+						</variant:VariantManagement>
+						<ToolbarSpacer/>
+						<!-- Refresh -->
+						<Button id="BtnRefresh" class="sapUiSmallMarginEnd" tooltip="{i18n>ToolTipRefresh}"
+								icon="sap-icon://refresh" width="2em" press="onVesselRefresh"/>
+						<!-- Download to Excel -->
+						<Button icon="sap-icon://download" type="Emphasized" class="sapUiTinyMarginEnd"
+								press="onVesselDownload" />
+						<!-- Table Settings -->
+						<Button id="BtnPersonalizeVesselContent" icon="sap-icon://action-settings" type="Emphasized"
+								class="sapUiTinyMarginEnd" tooltip="{i18n>ToolTipPersonalizationSettings}" width="2em"
+								press="onPersonalizeVesselColumns" />
+						<!-- Selection Screen -->
+						<Button id="BtnSelectionScreenFilter" text="{i18n>SelectionInput}" type="Emphasized"
+								class="sapUiTinyMarginEnd" tooltip="{i18n>ToolTipSelectionScreen}" width="10em" 
+								press="onSelectionScreenPress"/>
+					</OverflowToolbar>
+				</table:extension>
+				<table:columns>
+					<!-- Vessel Code and Name -->
+					<table:Column width="7em" name="{i18n>VesselListCol.Vessel}" tooltip="{i18n>VesselListCol.Vessel}" 
+									filterProperty="VesselCode" sortProperty="VesselCode" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.Vessel}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{VesselCode}"
+										design="Bold" />
+									<Text text="{VesselName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Shipment -->
+					<table:Column width="7em"  name="{i18n>VesselListCol.ShipmentSAP}" tooltip="{i18n>VesselListCol.ShipmentSAP}" 
+									filterProperty="ShipmentNo" sortProperty="ShipmentNo" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ShipmentSAP}"/>
+						<table:template>
+							<Text text="{ShipmentNo}" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					<!-- BOL/AWB -->
+					<table:Column width="11em" name="{i18n>VesselListCol.BillOfLandingNo}" filterProperty="BolNo" 
+									tooltip="{i18n>VesselListCol.BillOfLandingNo}" sortProperty="BolNo" >
+						<Label text="{i18n>VesselListCol.BillOfLandingNo}"/>
+						<table:template>
+							<Text text="{BolNo}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Vessel Status -->
+					<table:Column width="7em" name="{i18n>VesselListCol.VesselStatus}" tooltip="{i18n>VesselListCol.VesselStatus}" 
+									sortProperty="VesselStatus">
+						<Label text="{i18n>VesselListCol.VesselStatus}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{VesselStatus}" 
+										design="Bold" />
+									<Text text="{VesStatDes}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Flight Or Voyage Number -->
+					<table:Column width="7em" name="{i18n>VesselListCol.FlightOrVoyageNumber}" tooltip="{i18n>VesselListCol.FlightOrVoyageNumber}" 
+						filterProperty="FlightVoyageNo" sortProperty="FlightVoyageNo" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.FlightOrVoyageNumber}"/>
+						<table:template>
+							<Text text="{FlightVoyageNo}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Trans Load Indicator -->
+					<table:Column width="7em" name="{i18n>VesselListCol.TransLoadInd}" filterProperty="TransloadInd" 
+									tooltip="{i18n>VesselListCol.TransLoadInd}" sortProperty="TransloadInd" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.TransLoadInd}"/>
+						<table:template>
+							<Text text="{TransloadInd}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Ship Status - SPS Name and Code -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipStatus_SPSNameAndCode}" tooltip="{i18n>VesselListCol.ShipStatus_SPSNameAndCode}"  
+									filterProperty="ShipStatusSPS" sortProperty="ShipStatusSPS" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ShipStatus_SPSNameAndCode}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{ShipStatusSPS}" 
+										design="Bold" />
+									<Text text="{ShipStatusSPSDes}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Ship Status - Overall -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipStatus}" tooltip="{i18n>VesselListCol.ShipStatus}" 
+									filterProperty="ShipStatusSAP" sortProperty="ShipStatusSAP" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ShipStatus}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{ShipStatusSAP}" 
+										design="Bold" />
+									<Text text="{ShipStatusSAPDes}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Forwarding Agent -->
+					<table:Column width="6em" name="{i18n>VesselListCol.Vendor_FreightFrw}" tooltip="{i18n>VesselListCol.Vendor_FreightFrw}" 
+								sortProperty="ForwardingAgent">
+						<Label text="{i18n>VesselListCol.Vendor_FreightFrw}"/>
+						<table:template>
+							<Text text="{ForwardingAgent}" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					<!-- EREQ ID -->
+					<table:Column width="9em" name="{i18n>VesselListCol.EREQ_Req_No}" filterProperty="EreqNo" sortProperty="EreqNo" 
+						 			tooltip="{i18n>VesselListCol.EREQ_Req_No}" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.EREQ_Req_No}"/>
+						<table:template>
+							<Text text="{EreqNo}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Forwarder Reference Number -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ForwarderRefNo}" filterProperty="ForwarderRefNo" 
+									tooltip="{i18n>VesselListCol.ForwarderRefNo}" sortProperty="ForwarderRefNo" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ForwarderRefNo}"/>
+						<table:template>
+							<Text text="{ForwarderRefNo}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Booking Number -->
+					<table:Column width="7em" name="{i18n>VesselListCol.BookingNumber}" tooltip="{i18n>VesselListCol.BookingNumber}" >
+						<Label text="{i18n>VesselListCol.BookingNumber}"/>
+						<table:template>
+							<Text text="{BookingNo}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Current Port -->
+					<table:Column width="7em" name="{i18n>VesselListCol.CurrentPort}" filterProperty="CurrentPort" 
+									sortProperty="CurrentPort" tooltip="{i18n>VesselListCol.CurrentPort}" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.CurrentPort}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{CurrentPort}" 
+										design="Bold" />
+									<Text text="{CurrentPortName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Load Port Code and Name -->
+					<table:Column width="7em" name="{i18n>VesselListCol.LoadPortCode_Name}" tooltip="{i18n>VesselListCol.LoadPortCode_Name}"
+									filterProperty="LoadPortCode" sortProperty="LoadPortCode" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.LoadPortCode_Name}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{LoadPortCode}" 
+										design="Bold" />
+									<Text text="{LoadPortName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>  
+						</table:template>
+					</table:Column>
+					<!-- Trans Load Port Code and Name -->
+					<table:Column width="7em" name="{i18n>VesselListCol.TransLoadPortCode_Name}" tooltip="{i18n>VesselListCol.TransLoadPortCode_Name}"
+									filterProperty="TransLoadPortCode" sortProperty="TransLoadPortCode" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.TransLoadPortCode_Name}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{TransLoadPortCode}" 
+										design="Bold" />
+									<Text text="{TransLoadPortName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>  
+						</table:template>
+					</table:Column>
+					<!-- Discharge Port Code and Name -->
+					<table:Column width="7em" name="{i18n>VesselListCol.DischargePortCode_Name}" tooltip="{i18n>VesselListCol.DischargePortCode_Name}"
+									filterProperty="DischargePortCode" sortProperty="DischargePortCode" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.DischargePortCode_Name}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{DischargePortCode}" 
+										design="Bold" />
+									<Text text="{DischargePortName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>  
+						</table:template>
+					</table:Column>
+					<!-- Ship To Country -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipToCountry}" tooltip="{i18n>VesselListCol.ShipToCountry}"
+									filterProperty="ShipToCountry" sortProperty="ShipToCountry" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ShipToCountry}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{ShipToCountry}" 
+										design="Bold" />
+									<Text text="{ShipToCountryName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Ship From Country -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipFromCountry}" tooltip="{i18n>VesselListCol.ShipFromCountry}"
+									filterProperty="ShipFromCountry" sortProperty="ShipFromCountry" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ShipFromCountry}"/>
+						<table:template>
+							<FlexBox direction="Column" alignItems="Start"
+								justifyContent="Center">
+								<items>
+									<Label text="{ShipFromCountry}" 
+										design="Bold" />
+									<Text text="{ShipFromCountryName}"
+										wrapping="false" />
+								</items>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+					<!-- Container Count -->
+					<table:Column width="7em" name="{i18n>VesselListCol.CountOfContainer}" filterProperty="ShipContainerCnt" 
+									sortProperty="ShipContainerCnt" tooltip="{i18n>VesselListCol.CountOfContainer}" defaultFilterOperator="EQ">
+						<Label text="{i18n>VesselListCol.CountOfContainer}"/>
+						<table:template>
+							<Text text="{=parseInt(${ShipContainerCnt})}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Vessel Weight -->
+					<table:Column width="7em" name="{i18n>VesselListCol.VesselWeight}" tooltip="{i18n>VesselListCol.VesselWeight}">
+						<Label text="{i18n>VesselListCol.VesselWeight}"/>
+						<table:template>
+							<Text text="{VesselWeight}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Vessel Weight Unit -->
+					<table:Column width="7em" name="{i18n>VesselListCol.VesselWeightUnit}" tooltip="{i18n>VesselListCol.VesselWeightUnit}">
+						<Label text="{i18n>VesselListCol.VesselWeightUnit}"/>
+						<table:template>
+							<Text text="{VesselWeightUnit}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Load Port Date - Planned -->
+					<table:Column width="7em" name="{i18n>VesselListCol.PlanLoadDate}" tooltip="{i18n>VesselListCol.PlanLoadDate}">
+						<Label text="{i18n>VesselListCol.PlanLoadDate}"/>
+						<table:template>
+							<Text text="{path:'LoadPortDateP' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" maxLines="2"/>   
+						</table:template>
+					</table:Column>
+					<!-- Discharge Port Date - Planned -->
+					<table:Column width="7em" name="{i18n>VesselListCol.PlanDischargeDate}" tooltip="{i18n>VesselListCol.PlanDischargeDate}">
+						<Label text="{i18n>VesselListCol.PlanDischargeDate}"/>
+						<table:template>
+							<Text text="{path:'DiscPortDateP' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" maxLines="2"/>   
+						</table:template>
+					</table:Column>
+					<!-- Load Port Date - Actual -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ACTLoadDate}" tooltip="{i18n>VesselListCol.ACTLoadDate}">
+						<Label text="{i18n>VesselListCol.ACTLoadDate}"/>
+						<table:template>
+							<Text text="{path:'LoadPortDateA' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" maxLines="2"/>   
+						</table:template>
+					</table:Column>
+					<!-- Discharge Port Date - Actual -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ACTDischargeDate}" tooltip="{i18n>VesselListCol.ACTDischargeDate}">
+						<Label text="{i18n>VesselListCol.ACTDischargeDate}"/>
+						<table:template>
+							<Text text="{path:'DiscPortDateA' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Ship to Party  -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipToParty}" filterProperty="CustomerNumber" 
+									sortProperty="CustomerNumber" tooltip="{i18n>VesselListCol.ShipToParty}" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ShipToParty}"/>
+						<table:template>
+							<Text text="{CustomerNumber}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Weight Per Shipment -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipmentWeight}" tooltip="{i18n>VesselListCol.ShipmentWeight}">
+						<Label text="{i18n>VesselListCol.ShipmentWeight}"/>
+						<table:template>
+							<Text text="{ShipWeight}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Ship Weight Unit -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ShipmentWeightUnit_ISO}" tooltip="{i18n>VesselListCol.ShipmentWeightUnit_ISO}">
+						<Label text="{i18n>VesselListCol.ShipmentWeightUnit_ISO}"/>
+						<table:template>
+							<Text text="{WeightUnit}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Legs Vessel Shipment -->
+					<table:Column width="7em" name="{i18n>VesselListCol.LegsVessel_Shipment}" tooltip="{i18n>VesselListCol.LegsVessel_Shipment}"
+									filterProperty="LegsVesselShipment" sortProperty="LegsVesselShipment" defaultFilterOperator="EQ">
+						<Label text="{i18n>VesselListCol.LegsVessel_Shipment}"/>
+						<table:template>
+							<Text text="{LegsVesselShipment}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Vessel Info Record -->
+					<table:Column width="8em" name="{i18n>VesselListCol.VesselInfoRec}" filterProperty="VesselInfoRec" 
+									sortProperty="VesselInfoRec" tooltip="{i18n>VesselListCol.VesselInfoRec}" defaultFilterOperator="EQ">
+						<Label text="{i18n>VesselListCol.VesselInfoRec}"/>
+						<table:template>
+							<Text text="{VesselInfoRec}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Created By -->
+					<table:Column width="7em" name="{i18n>VesselListCol.CreatedBy}" filterProperty="CreatedBy" 
+									sortProperty="CreatedBy" tooltip="{i18n>VesselListCol.CreatedBy}" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.CreatedBy}"/>
+						<table:template>
+							<Text text="{CreatedBy}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Changed By User -->
+					<table:Column width="7em" name="{i18n>VesselListCol.ChangedBy}" filterProperty="ChangedBy" 
+									sortProperty="ChangedBy" tooltip="{i18n>VesselListCol.ChangedBy}" defaultFilterOperator="Contains">
+						<Label text="{i18n>VesselListCol.ChangedBy}"/>
+						<table:template>
+							<Text text="{ChangedBy}" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					<!-- Created On Date  -->
+					<table:Column width="9em" name="{i18n>VesselListCol.CreatedOn}" tooltip="{i18n>VesselListCol.CreatedOn}">
+						<Label text="{i18n>VesselListCol.CreatedOn}"/>
+						<table:template>
+							<Text text="{path:'CreatedOn' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" maxLines="2"/>   
+						</table:template>
+					</table:Column>
+					<!-- Changed On Date -->
+					<table:Column width="9em" name="{i18n>VesselListCol.ChangedOn}" tooltip="{i18n>VesselListCol.ChangedOn}">
+						<Label text="{i18n>VesselListCol.ChangedOn}"/>
+						<table:template>
+							<Text text="{path:'ChangedOn' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:Table>
+		</semantic:content>
+		<semantic:customFooterContent>
+			<Label  text="{i18n>Header.supportMsg}" class="sapUiSmallMarginBeginEnd"  />
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+</mvc:View>

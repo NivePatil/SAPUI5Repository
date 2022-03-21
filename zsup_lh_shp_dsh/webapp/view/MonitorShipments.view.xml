@@ -1,0 +1,685 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table" xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:variant="sap.ui.comp.variants"
+	controllerName="com.slb.sup.lh.shipment.monitor.zsuplhshpdsh.controller.MonitorShipments">
+
+	<semantic:FullscreenPage id="pageShipmentHeader" title="{i18n>FULLSCREEN_TITLE}" enableScrolling="true"
+							showNavButton="true" navButtonPress="onBackNav" showFooter="true">
+		<semantic:content>
+			<l:VerticalLayout class="sapUiContentPadding" width="100%">
+				<l:content>
+					<VBox id="com.slb.sup.lh.shipment.monitor.CounterBox" alignItems="Center">
+						<HBox alignContent="Center">
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.TotalShipment}" design="Bold" />
+								<!-- Start of CD#2000031122: increase length of counter -->	
+								<NumericContent  value="{shipCountersModel>/cnt_total_shipment}" state="Loaded" withMargin="false" 
+												icon="sap-icon://Fiori3/F0538"  tooltip="{i18n>ToolTip.TotalShipment}" truncateValueTo="10" />
+							</VBox>
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.ShipmentIEPending}" design="Bold" />
+								<NumericContent value="{shipCountersModel>/cnt_shipment_lh_pending}" state="Loaded"
+												icon="sap-icon://permission" truncateValueTo="10" 
+												tooltip="{i18n>ToolTip.ImpExpPending}"	withMargin="false" />
+							</VBox>
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.ShipmentIERejected}" design="Bold" />
+								<NumericContent value="{shipCountersModel>/cnt_shipment_lh_under_review}" state="Loaded"
+												icon="sap-icon://request" valueColor="Error" truncateValueTo="10" 
+												tooltip="{i18n>ToolTip.ImpExpUnderReview}"	withMargin="false" />
+							</VBox>
+							<VBox alignItems="Center" class="sapUiSmallMarginBeginEnd">
+								<Label text="{i18n>Counters.ShipmentIEApproved}" design="Bold" />
+								<NumericContent value="{shipCountersModel>/cnt_shipment_lh_approved}" state="Loaded"
+												icon="sap-icon://approvals" valueColor="Good" truncateValueTo="10" 
+												tooltip="{i18n>ToolTip.ImpExpApproved}"	withMargin="false" />
+								<!-- End of CD#2000031122: increase length of counter -->
+							</VBox>
+						</HBox>
+					</VBox>
+				</l:content>
+			</l:VerticalLayout>
+			<ToolbarSpacer />
+			<table:Table id="TblMonitorShipments" threshold="40" rowSelectionChange="onMonShipRowSelect" columnMove="onTblMonShipColumnMove"
+						class="sapUiMediumMarginBeginEnd" visibleRowCount="9" selectionMode="MultiToggle" rowHeight="35"
+						busy="{headerTableModel>/HeaderTableBusy}" noData="{i18n>NoData}">
+				<!-- Start of changes for RFC# 7000016440 : Fiori Upgrade - Replacing table:toolbar with table:extension -->
+				<table:extension>
+					<!-- Start of changes for RFC 7000016440 CD 2000036661 : F1D Upgrade : Removed FlexBox and HBox and inserted buttons in OverflowToolbar separated by ToolbarSpacer -->
+					<OverflowToolbar>
+						<Button id="BtnShipmentContent" text="{i18n>ShipmentContent}" type="Emphasized" class="sapUiSmallMarginEnd"
+								tooltip="{i18n>ToolTipShipmentContent}" width="12em" press="onClickShipmentContent" />
+						<Button id="BtnUpdateShpCost" text="{i18n>UpdateShpCost}" type="Emphasized" class="sapUiSmallMarginEnd" 
+								tooltip="{i18n>UpdateShCost}" width="12em" press="OnClickUpdateShpCost" enabled="true" />
+						<!-- Start of RFC#7000014339:CD#2000032191:I/E PreClr Instructions button 	 -->
+						<Button id="id_btnIEPreClr" text="{i18n>IEPreClrInst}" type="Emphasized" class="sapUiSmallMarginEnd" 
+								tooltip="{i18n>ToolTipIEPreClr}" press="OnClickIEClrPreInstr" />
+						<!-- End of RFC#7000014339:CD#2000032191:I/E PreClr Instructions button --> 		
+						<!--  start of RFC#7000013627 : add visibility -->
+						<Button id="BtnSubmitShpInvoice" class="sapUiSmallMarginEnd" tooltip="{i18n>UpdateShInv}"
+								text="{i18n>SubmitShp}" type="Emphasized"  width="12em" press="OnClickSubmitShp" enabled="true" />
+						<!--  end of RFC#7000013627 : add visibility -->
+						<!-- Start of changes for CD #2000025529 : Apply Variant Management to the Outbound Sales Orders table -->
+						<variant:VariantManagement variantItems="{LhTableVariantsModel>/LhTableVariants}" select="onSelectVariant" save="onSaveVariantAs" enabled="true" 
+												manage="onManageVariants" showExecuteOnSelection="false" showShare="false" id="LhVariantManagement">
+						<variant:variantItems>
+							<variant:VariantItem text="{LhTableVariantsModel>Name}" key="{LhTableVariantsModel>Key}"/>
+						</variant:variantItems>
+						</variant:VariantManagement>
+						<!-- End of changes for CD #2000025529 : Apply Variant Management to the Outbound Sales Orders table -->
+						<ToolbarSpacer/>
+						<Button id="BtnUpdateTcp" class="sapUiSmallMarginEnd" tooltip="Update Transportation Connection Point"
+                                   text="{i18n>UpdateTCP}" type="Emphasized" width="12em" press="OnClicktcp" enabled="true" /> 
+						<Button id="BtnRefresh" type="Default" class="sapUiSmallMarginEnd" tooltip="{i18n>ToolTipRefresh}"
+								icon="sap-icon://refresh" width="2em" press="OnClickRefresh"/>
+						<Button icon="sap-icon://download" type="Emphasized" class="sapUiTinyMarginEnd"
+								press="OnClickDownload" />
+						<Button id="BtnPersonalizeShipmentContent" icon="sap-icon://action-settings" type="Emphasized"
+								class="sapUiTinyMarginEnd" tooltip="{i18n>ToolTipPersonalizationSettings}" width="2em"
+								press="OnClickPersonalizeMonitorShipment" />
+						<Button id="BtnSelectionScreenFilter" text="{i18n>SelectionInput}" type="Emphasized"
+								class="sapUiTinyMarginEnd" tooltip="{i18n>ToolTipSelectionScreen}" width="10em" 
+								press="OnClickSelectionScreen"/>
+					</OverflowToolbar>
+					<!-- End of changes for RFC 7000016440 CD 2000036661 : F1D Upgrade : Removed FlexBox and HBox and inserted buttons in OverflowToolbar separated by ToolbarSpacer -->
+				</table:extension>
+				<!-- End of changes for RFC# 7000016440 : Fiori Upgrade - Replacing table:toolbar with table:extension -->
+				<!-- Start of changes for CD# 2000025529 : Apply Variant Management to table : adding name property to all the columns -->				
+				<table:columns>
+					<table:Column width="4em"   visible="false" name="{i18n>SMTableColType}" tooltip="{i18n>ToolTip.MonShipCol.Type}">
+						<Label text="{i18n>SMTableColType}" />
+						<table:template>
+							<Text text="{ShpmntType}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="7em"  name="{i18n>SMTableColShipment}"
+						 filterProperty="ShipmentNum" tooltip="{i18n>ToolTip.MonShipCol.Shipment}"
+						sortProperty="ShipmentNum" defaultFilterOperator="Contains">
+						<Label text="{i18n>SMTableColShipment}" />
+						<table:template>
+						<ObjectStatus text="{ShipmentNum}" 
+								state="{parts:[{path : 'ShipmentNum'}, {path : 'flag'}], 
+								formatter:'.formatter.funObjectStatusShipNum'}" />
+
+						</table:template>
+					</table:Column>
+					
+					<!-- start of RFC#7000013937:CD#2000031553: Add column TPP -->
+					<table:Column width="6em"  tooltip="{i18n>ToolTip.MonShipCol.Tpp}"
+						id="id_SHCol_Tpp" filterProperty="TranspPlanPt" name="{i18n>SMTableColTpp}"
+						sortProperty="TranspPlanPt" defaultFilterOperator="Contains">
+						<Label text="{i18n>SMTableColTpp}" />
+						<table:template>
+						<Text text="{TranspPlanPt}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					<!-- End of RFC#7000013937:CD#2000031553: Add column TPP -->
+					
+					
+					<table:Column width="9em"  name="{i18n>SMTableColForwardingAgent}"
+						 filterProperty="FwdAgntName" visible="false"
+						 tooltip="{i18n>ToolTip.MonShipCol.ForwardingAgent}"
+						sortProperty="FwdAgent" defaultFilterOperator="Contains">
+						<Label text="{i18n>SMTableColForwardingAgent}" />
+						<table:template>
+							<Text text="{parts:[{path : 'FwdAgent'}, {path : 'FwdAgntName'}], formatter:'.formatter.concatString'}"	wrapping="true" maxLines="2"/>  
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="11em"  visible="false" name="Indicator"
+					tooltip="{i18n>ToolTip.MonShipCol.Indicators}"
+									defaultFilterOperator="StartsWith">
+									<Label text="Indicator" />
+									<table:template>
+										<HBox>
+										
+												 
+									<Button
+                                                              type="{parts: [{path : 'PlanShpmntComplDt'}, {path : 'ActShpmntComplDt'},{path : 'SystemDate'}], 
+                                                                                        formatter: '.formatter.PlanCheckInDtButtonVis'}"
+                                                              class="sapUiTinyMarginEnd"
+                                                              icon="sap-icon://BusinessSuiteInAppSymbols/icon-box-truck-empty"
+                                                              tooltip="{i18n>ToolTip.ShipmentPickUp}"
+                                                              visible="{parts: [{path:'PlanShpmntComplDt'},{path : 'IePreclrStatus'}], formatter:'.formatter.fnVisibilityIndicatorPlnChkIn'}" />
+
+
+
+								<Button
+									type="{parts: [{path : 'PlanShpmntStartDt'}, {path : 'ActShpmntStartDt'},{path : 'SystemDate'}],
+                 											formatter: '.formatter.PlanDepartureDtButtonVis'}"
+									class="sapUiTinyMarginEnd" icon="sap-icon://journey-arrive"
+									tooltip="{i18n>ToolTip.ShipmentDeparture}"
+									visible="{path:'PlanShpmntStartDt', formatter:'.formatter.fnVisibilityIndicatorPlanShmntStartDt'}" />
+
+
+								<Button
+									type="{parts: [{path : 'PlanShpmntEndDt'}, {path : 'ActShpmntEndDt'},{path : 'SystemDate'}],
+                 											formatter:'.formatter.PlanArrvDtButtonVis'}"
+									class="sapUiTinyMarginEnd" icon="sap-icon://journey-depart"
+									tooltip="{i18n>ToolTip.ShipmentArrival}"
+									visible="{path:'PlanShpmntEndDt', formatter:'.formatter.fnVisibilityIndicatorPlanShpmntEndDt'}" />
+
+								<Button
+									type="{parts: [{path : 'IndNoShpmntCost'}, {path : 'IndNoShpmntInv'}],
+                 											formatter:'.formatter.funCstInvIndType'}"
+									class="sapUiTinyMarginEnd"
+									tooltip="{i18n>ToolTip.CostInvIndicator}"
+									icon="sap-icon://lead"
+									visible="{parts: [{path : 'IndNoShpmntCost'}, {path : 'IndNoShpmntInv'},{path : 'SystemDate'}],
+                 											formatter:'.formatter.funCstInvIndVis'}" />
+
+
+								<Button type="Accept" class="sapUiTinyMarginEnd"
+									icon="sap-icon://map" tooltip="{i18n>ToolTip.FATrackingId}"
+									visible="{path : 'TndrTrkid', formatter: '.formatter.funFATrackbtn'}"
+									press="onPressFATrackIdBtn" />		 
+												 
+												 
+										</HBox>
+									</table:template>
+								</table:Column>
+								
+				<table:Column   width="7em" visible="false" name="{i18n>ShpCond}"
+						 filterProperty="ShpCond" tooltip="{i18n>ToolTip.MonShipCol.SHCondition}"
+						sortProperty="ShpCond" defaultFilterOperator="EQ">
+						<Label text="{i18n>ShpCond}"/>
+						<table:template>
+						  <Text text="{parts:[{path : 'ShpCond'}, {path : 'ShpcondDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>  
+						 
+							 
+						</table:template>
+					</table:Column>
+						
+
+					<table:Column width="6em"  name="{i18n>SMTableColShipType}"
+						filterProperty="ShippingTyp"
+						tooltip="{i18n>ToolTip.MonShipCol.SHType}"
+						sortProperty="ShippingTyp" defaultFilterOperator="EQ">
+						<Label text="{i18n>SMTableColShipType}" />
+						<table:template>
+							<Input value="{parts:[{path : 'ShippingTyp'}, {path : 'ShptypDesc'}], formatter:'.formatter.concatString'}" 
+							editable="{parts:[{path : 'OverallStatus'}], formatter:'.formatter.inputEnabled'}"
+							valueHelpRequest="handleShippingTypeF4Open" showValueHelp="true" valueHelpOnly="true"  />
+						</table:template>
+					</table:Column>
+					
+				 
+					<table:Column width="6em"  name="{i18n>SMTableColStatus}"
+						
+						 tooltip="{i18n>ToolTip.MonShipCol.Status}"
+						sortProperty="OverallStatus" defaultFilterOperator="EQ">
+						<Label text="{i18n>SMTableColStatus}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'OverallStatus'}, {path : 'OvrStaText'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+
+					<table:Column width="6em"  name="{i18n>SMTableColIEPreClr}" 
+						filterProperty="IePreclrStatus"
+						tooltip="{i18n>ToolTip.MonShipCol.IEPreClr}"
+						sortProperty="IePreclrStatus" defaultFilterOperator="EQ">
+						<Label text="{i18n>SMTableColIEPreClr}" />
+						<table:template>
+							<!-- <Text text="{IeIePreclrStatus}" /> -->
+							<Text text ="{parts:[{path : 'IePreclrStatus'}, {path : 'IePreclrStatDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+				
+			<!-- 	Start of RFC#7000012893:CD#2000029977:Add filter,sorter -->
+
+				<table:Column width="6em"  name="{i18n>Critical}" filterProperty="IndCritical"
+						sortProperty="IndCritical" defaultFilterOperator="EQ"
+						 tooltip="{i18n>ToolTip.MonShipCol.CriticalInd}">
+						<Label text="{i18n>Critical}" />
+						<table:template>
+
+							<Text id="id_inp_Critical"  
+								text="{parts:[{path : 'IndCritical'}, {path : 'IndCriticalDesc'}], formatter:'.formatter.concatString'}"
+								  wrapping="true" maxLines="2"/>
+
+						</table:template>
+					</table:Column>	
+					
+				<!--start of changes CD #2000025529: variant management-->	
+					<table:Column width="6em"  name="{i18n>SplProcInd}"
+						
+						 tooltip="{i18n>SplProcInd}" filterProperty="SplProcInd"
+						sortProperty="SplProcInd" defaultFilterOperator="EQ">
+						<Label text="{i18n>SplProcInd}" />
+						<table:template>
+							<Text
+								text="{parts:[{path : 'SplProcInd'}, {path : 'SplProcIndDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					<!-- End of RFC#7000012893:CD#2000029977:Add filter,sorter -->
+					
+						<table:Column width="8em"  tooltip="{i18n>EMORdd}"
+						filterProperty="EMORdd" name="{i18n>EMORdd}" 
+						sortProperty="EMORdd"
+						defaultFilterOperator="StartsWith" >
+						<Label
+							text="{i18n>EMORdd}" />
+						<table:template>
+							<Text   
+						 	text="{path:'EMORdd' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" wrapping="true" maxLines="2"/>	
+						</table:template>
+					</table:Column>
+					 
+					
+					<table:Column width="4em"  tooltip="{i18n>EMOIncidentId}"
+						filterProperty="EMOIncidentId" name="{i18n>EMOIncidentId}"
+						sortProperty="EMOIncidentId"
+						defaultFilterOperator="StartsWith" >
+						<Label
+							text="{i18n>EMOIncidentId}" />
+						<table:template>
+							<Text text="{EMOIncidentId}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+	<!--end of changes CD #2000025529: variant management-->
+					
+					<table:Column width="6em"  name="{i18n>SMTableColCost}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.Cost}" >
+						
+						<Label text="{i18n>SMTableColCost}" />
+						<table:template>
+							<Text text ="{ShpmntTotCost}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					
+					
+					<table:Column  width="6em" tooltip="{i18n>ToolTip.MonShipCol.Invoice}" name="{i18n>Totalcost}"
+						 >
+						<Label text="{i18n>Totalcost}"/>
+						<table:template>
+						  <Text text="{path:'ShpmntTotInv'}" wrapping="true" maxLines="2"/>  
+							 
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="4em"   name="{i18n>SMTableColCurrency}"
+						   tooltip="{i18n>ToolTip.MonShipCol.Currency}">
+						
+						<Label text="{i18n>SMTableColCurrency}" />
+						<table:template>
+							<Text text ="{Currency}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+
+					<table:Column width="10em"  visible="false" name="{i18n>SMTableColCreationDt}"
+						 
+						 tooltip="{i18n>ToolTip.MonShipCol.SHCrtDate}">
+						<Label text="{i18n>SMTableColCreationDt}" />
+						<table:template>
+					 	<Text   
+						 	text="{path:'CreationDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+									 	UTC: true,
+					                  pattern: 'dd-MMM-yyyy'
+					                } }" wrapping="true" maxLines="2"/>	
+						</table:template>
+					</table:Column>
+
+
+					<table:Column width="7em"  name="{i18n>SMTableColPLDCheckInPickUp}"
+					
+					 tooltip="{i18n>ToolTip.MonShipCol.PLDPickUp}">
+						<Label text="{i18n>SMTableColPLDCheckInPickUp}" />
+						<table:template>
+						<!--  start RFC#7000012672:CD#2000029495:enable Pln  Pick date -->
+						   
+					      <!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+								
+								<DatePicker id="PlanCheckInDt" displayFormat="dd-MMM-yyyy" change="onChgPchkDt"
+						   	 minDate = "{parts:[{path : 'SystemDate'},{path : 'PlanShpmntComplDt'}], formatter:'.formatter.minDatePlnPick'}"
+						   	 enabled ="{parts:[{path : 'OverallStatus'},{path : 'IePreclrStatus'},{path : 'ShpmntType'},{path : 'PlanShpmntComplDt'}], formatter:'.formatter.editablePldDates'}"
+							 value= "{path:'PlanShpmntComplDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }"  /> 
+								
+						<!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->   
+					                
+						   	 
+					        <!--  end RFC#7000012672:CD#2000029495:enable Pln  Pick date -->        
+						</table:template>
+					</table:Column>
+					
+						<table:Column id="id_Col_PlannedDepDt" width="7em" name="{i18n>SMTableColPLDDepSendingPort}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.PLDDep}"
+						visible = "{parts: [{path : 'ShpmntType'}, {path : 'PlanShpmntStartDt'}],
+                 											formatter: '.formatter.fnVisiblePldDepDt'}">
+						 
+						<Label text="{i18n>SMTableColPLDDepSendingPort}" />
+						<table:template>
+						 
+					   <!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+					   <!-- <DatePicker id="PlannedDepDt"  change="onChgPdepDt" displayFormat="dd-MMM-yyyy"
+						enabled ="{parts:[{path : 'OverallStatus'},{path : 'IePreclrStatus'}], formatter:'.formatter.editablePlnShipStartDates'}"
+						 value="{parts: [{path:'PlanShpmntStartDt'}, {path: 'DateFormatTypesModel>/aDateFormatTypes/0'}],
+										    formatter: '.FormatDateOutput.prototype.formatDatePattern'}" 
+					                minDate="{parts:[{path : 'PlanShpmntStartDt'}], formatter:'.formatter.setMinDate'}"/> -->
+					   <!-- Start of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+					   <DatePicker id="PlannedDepDt"  change="onChgPdepDt" displayFormat="dd-MMM-yyyy"
+						enabled ="{parts:[{path : 'OverallStatus'},{path : 'IePreclrStatus'}], formatter:'.formatter.editablePlnShipStartDates'}"
+						 value= "{path:'PlanShpmntStartDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }" 
+					                minDate="{parts:[{path : 'PlanShpmntStartDt'}], formatter:'.formatter.setMinDate'}"/>
+					   <!-- End of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+					   <!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->             
+							 
+						</table:template>
+					</table:Column>
+					
+					<table:Column id="id_Col_PlannedArrivalDt" width="7em" name="{i18n>SMTableColPLDArvDestination}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.PLDArv}">
+						<Label text="{i18n>SMTableColPLDArvDestination}" 
+						visible = "{parts: [{path : 'ShpmntType'}, {path : 'PlanShpmntEndDt'}],
+                 											formatter: '.formatter.fnVisiblePldArvDt'}"
+						/>
+						<table:template>
+								 
+                  
+		 <!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+		 <!-- Start of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+		 				<DatePicker   id="PlannedArrivalDt" change="onChgParrDt" displayFormat="dd-MMM-yyyy"
+					    enabled ="{parts:[{path : 'OverallStatus'},{path : 'IePreclrStatus'},{path : 'ActShpmntStartDt'},{path : 'PlanShpmntEndDt'}], formatter:'.formatter.editablePlnArrivalDates'}"
+						value= "{path:'PlanShpmntEndDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }"
+					             minDate="{parts:[{path : 'PlanShpmntEndDt'}], formatter:'.formatter.setMinDate'}"    />  
+		<!-- End of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+		<!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->             					 
+						</table:template>
+					</table:Column>
+					
+					<table:Column  width="5em" name="{i18n>ContainerId}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.ContainerId}">
+						<Label text="{i18n>ContainerId}"/>
+						<table:template>
+					  	<Input value="{ContainerId}" change="chgContainerId" 
+					  editable="{parts:[{path : 'OverallStatus'}], formatter:'.formatter.inputEnabled'}" />	
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="10em" name="{i18n>HouseAir}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.HouseAirwayBill}">
+						<Label text="{i18n>HouseAir}"/>
+						<table:template>
+						  <Input value="{AdditText1}" change="chgHouseAir"
+						   editable ="{parts:[{path : 'OverallStatus'}], formatter:'.formatter.editableHAB'}" />  
+							 
+						</table:template>
+					</table:Column>
+
+				<table:Column  width="10em" name="{i18n>MasterAir}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.MasterAirwayBill}">
+						<Label text="{i18n>MasterAir}"/>
+						<table:template>
+						  <Input value="{AdditText2}" change="chgMasterAir"
+						  editable ="{parts:[{path : 'OverallStatus'}], formatter:'.formatter.editableMasterAirBill'}" />  
+							 
+						</table:template>
+					</table:Column>
+					
+					<table:Column  width="10em" name="{i18n>BillExit}"
+						 >
+						<Label text="{i18n>BillExit}"/>
+						<table:template>
+						 <!--  <Input value="{AdditText3}" change="chgBillExit" />   -->
+						   <Input value="{AdditText3}" change="chgBillExit" 
+						    editable ="{parts:[{path : 'OverallStatus'}], formatter:'.formatter.editableMasterAirBill'}"/>  
+							 
+						</table:template>
+					</table:Column>
+
+				<table:Column  width="7em" name="{i18n>TndrTrkid}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.FATrackingId}">
+						<Label text="{i18n>TndrTrkid}" />
+						<table:template>
+							  <Input value="{TndrTrkid}" change="chgTrId"
+							   editable ="{parts:[{path : 'OverallStatus'}], formatter:'.formatter.editableMasterAirBill'}" />  
+							 
+							
+						</table:template>
+					</table:Column>
+					
+
+					<table:Column width="7em"  name="{i18n>SMTableColACTCheckInPickUp}"
+						tooltip="{i18n>ToolTip.MonShipCol.ACTPickUp}">
+						<Label text="{i18n>SMTableColACTCheckInPickUp}" />
+						<table:template>
+ <!-- End of RFC 7000008843 -->
+ 
+ <!-- 	Begin of RFC#7000012816:CD#2000029829: add condition for SplProcInd-->
+					                
+
+	<!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+	<!-- Start of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+					<DatePicker id="ActCheckInDt"  displayFormat="dd-MMM-yyyy"
+					enabled ="{parts:[{path : 'OverallStatus'},{path : 'ShpmntType'},{path : 'IePreclrStatus'},{path : 'SplProcInd'}], formatter:'.formatter.editableActPickDate'}"
+						value= "{path:'ActShpmntComplDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }"
+					                change="onChgAchkDt"  />	
+<!-- End of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+	<!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->     				                					                
+ <!-- 	end of RFC#7000012816:CD#2000029829: add condition for SplProcInd-->		
+					                
+						</table:template>
+					</table:Column> 
+
+
+					<table:Column id="id_Col_ActualDepartureDt" name="{i18n>SMTableColACTDepSendingPort}"
+					tooltip="{i18n>ToolTip.MonShipCol.ACTDep}"
+						width="7em"  >
+						<Label text="{i18n>SMTableColACTDepSendingPort}"
+						visible = "{parts: [{path : 'ShpmntType'}, {path : 'ActShpmntStartDt'}],
+                 											formatter: '.formatter.fnVisibleActDepDt'}"
+						 />
+						<table:template>
+						 
+                     
+					 
+				<!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+				<!-- Start of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+					<DatePicker id="ActualDepartureDt"  change="onChgAdepDt" displayFormat="dd-MMM-yyyy"
+					enabled ="{parts:[{path : 'OverallStatus'},{path : 'ShpmntType'}], formatter:'.formatter.editableActDepDate'}"
+						value= "{path:'ActShpmntStartDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }"  />		
+				<!-- End of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+				<!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->    			 
+						</table:template>
+					</table:Column>
+
+					
+					<table:Column id="id_Col_ActualArvDate" width="7em" name="{i18n>SMTableColACTArvDestination}" 
+					tooltip="{i18n>ToolTip.MonShipCol.ACTArv}"
+						 >
+						<Label text="{i18n>SMTableColACTArvDestination}" 
+						visible = "{parts: [{path : 'ShpmntType'}, {path : 'ActShpmntEndDt'}],
+                 											formatter: '.formatter.fnVisibleActArvDt'}"
+						/>
+						<table:template>
+							      
+					         <!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+					         <!-- Start of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+							<DatePicker id="ActualArvDate" change="onChgAarrDt" displayFormat="dd-MMM-yyyy"
+					enabled ="{parts:[{path : 'OverallStatus'},{path : 'ShpmntType'}], formatter:'.formatter.editableActArrDate'}"
+					value= "{path:'ActShpmntEndDt' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }" /> 
+							<!-- End of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+							<!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->                       
+							 
+						</table:template>
+					</table:Column>
+					 
+					 
+					<table:Column  width="7em" name="{i18n>DeparturePoint}"
+						
+						tooltip="{i18n>ToolTip.MonShipCol.DepPoint}"
+						 visible="false">
+						<Label text="{i18n>DeparturePoint}" />
+						<table:template>
+							<Text text="{parts:[{path : 'DeparturePoint'}, {path : 'DepPointDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+				
+					
+					<table:Column  width="7em"  name="{i18n>DestinationPoint}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.DestPoint}"
+						 visible="false">
+						<Label text="{i18n>DestinationPoint}" />
+						<table:template>
+							<Text text="{parts:[{path : 'DestinationPoint'}, {path : 'DestPointDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					
+					<table:Column  width="7em" name="{i18n>ShipfromCity}"
+						 
+						tooltip="{i18n>ToolTip.MonShipCol.ShipfromCity}">
+						<Label text="{i18n>ShipfromCity}" />
+						<table:template>
+						<Text text ="{ShipfromCity}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					
+					<table:Column  width="7em" name="{i18n>ShiptoCity}" 
+						
+						tooltip="{i18n>ToolTip.MonShipCol.ShiptoCity}">
+						<Label text="{i18n>ShiptoCity}" />
+						<table:template>
+						<Text text ="{ShiptoCity}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					
+					<!-- Start of RFC#7000013868:CD#2000032475: addition of columns Ship to Country and Ship from Country -->
+					
+					<table:Column  width="7em" name="{i18n>Shiptocountry}"
+						
+						tooltip="{i18n>Shiptocountry}"
+						 visible="false">
+						<Label text="{i18n>Shiptocountry}" />
+						<table:template>
+							<Text text="{parts:[{path : 'ShiptoCountry'}, {path : 'ShiptoCtryDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+				
+					
+					<table:Column  width="7em"  name="{i18n>Shipfromcountry}"
+						 
+						tooltip="{i18n>Shipfromcountry}"
+						 visible="false">
+						<Label text="{i18n>Shipfromcountry}" />
+						<table:template>
+							<Text text="{parts:[{path : 'ShipfromCountry'}, {path : 'ShipfrmCtryDesc'}], formatter:'.formatter.concatString'}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+					
+					<!-- End of RFC#7000013868:CD#2000032475: addition of columns Ship to Country and Ship from Country-->
+					
+					
+					
+					<table:Column  width="4em" name="{i18n>PlannedCost}"
+						 filterProperty="IndNoShpmntCost" visible="false"
+						tooltip="{i18n>ToolTip.MonShipCol.CostPending}"
+						sortProperty="IndNoShpmntCost" defaultFilterOperator="StartsWith">
+						<Label text="{i18n>PlannedCost}"/>
+						<table:template>
+						  <Text text="{path:'IndNoShpmntCost'}" wrapping="true" maxLines="2"/>  
+							 
+						</table:template>
+					</table:Column>
+
+			<table:Column   width="5em" visible="false" name="{i18n>ActualCost}"
+						 filterProperty="IndNoShpmntInv"
+						tooltip="{i18n>ToolTip.MonShipCol.InvoicePending}"
+						sortProperty="IndNoShpmntInv" defaultFilterOperator="StartsWith">
+						<Label text="{i18n>ActualCost}"/>
+						<table:template>
+						   
+				
+						 <Text text="{path:'IndNoShpmntInv'}" wrapping="true" maxLines="2"/> 
+						</table:template>
+					</table:Column>
+
+	
+					
+<!--#2000025529: Extra columns below -->	
+
+		
+			<table:Column id="id_DtEndPlng" name="{i18n>DtEndPlng}"
+					tooltip="{i18n>DtEndPlng}"
+					visible = "{parts: [{path : 'ShpmntType'}, {path : 'OverallStatus'}],
+                 											formatter: '.formatter.fnVisibleEndDt'}"
+						width="7em"  >
+						<Label text="{i18n>DtEndPlng}" />
+						<table:template>
+						 
+						 <!-- Start of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->
+						 <!-- Start of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+							<DatePicker id="DtEndPlng"  change="OnChgDtEndPlng" displayFormat="dd-MMM-yyyy"
+					enabled ="{parts:[{path : 'ShpmntType'}, {path : 'OverallStatus'}], formatter:'.formatter.editableEndDate'}"
+					value= "{path:'DtEndPlng' , type:'sap.ui.model.type.Date', formatOptions: { 
+										 UTC: true,
+						                  pattern: 'dd-MMM-yyyy'
+						                } }"  />		 
+						<!-- End of RFC#7000016711:CD#2000043148:Date Format change for timezone issue -->
+						<!-- End of changes for RFC#7000014272 CD#2000031737 : Consuming Date Utility Library to change date format to DD-MMM-YYYY -->       	 
+						</table:template>
+					</table:Column>
+					
+					
+					<table:Column width="4em" name="{i18n>DeparturePointAndDestinationPointMissing}"
+						 filterProperty="IndNoDepDestPoints" sortProperty="IndNoDepDestPoints"
+						defaultFilterOperator="StartsWith" >
+						<Label text="{i18n>DeparturePointAndDestinationPointMissing}" />
+						<table:template>
+							<Text text="{IndNoDepDestPoints}" wrapping="true" maxLines="2"/>
+						</table:template>
+					</table:Column>
+
+				</table:columns>
+			</table:Table>
+		</semantic:content>
+
+		<semantic:customFooterContent>
+<Label  text="{i18n>Header.supportMsg}" class="sapUiSmallMarginBeginEnd"  />
+
+			<Button id="BtnUpdateShipment" text="{i18n>UpdateShipment}"
+				type="Accept" class="sapUiSmallMarginEnd"
+				tooltip="{i18n>ToolTipUpdateShipment}" width="4em"
+				press="onClickUpdateShipmentSAVE"/>
+
+
+		</semantic:customFooterContent>
+
+
+	</semantic:FullscreenPage>
+</mvc:View>
+ 
+ 
+ 
+ 
